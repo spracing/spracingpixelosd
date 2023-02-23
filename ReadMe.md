@@ -646,12 +646,14 @@ OSD systems.
 
 ## Differences to other Pixel based OSD systems
 
-* Vortex - The vortex OSD is great, but closed source and long discontinued, no published core or schematics.
+* Vortex - The vortex OSD is great, but closed source and long discontinued, no published code or schematics.
 * F1shpepper Tiny OSD - Isn't frame-buffer based. Doesn't integrate well into FC systems, no published schematics, 
   not used in commercial projects.
 * FrSkyOSD - More grey-scales, uses a resistor ladder, requires purchase from FrSky, high BOM cost, similar overall PCB 
   footprint, no published code or schematics. Uses a UART for FC->OSD communication, no direct frame-buffer access.
 * BrainFPV - FPGA based, no published code or schematics.
+* Kiss Ultra - Single MCU solution, not reverse engineered.  no published code or schematics.  Probably works fairly
+  similarly to this project, based on a quick look at photos of the PCB.
 * SuperOSD - Uses two PIC processors, low resolution, old, unmaintained, archived.
 
 ## History/Timeline
