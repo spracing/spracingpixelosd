@@ -103,13 +103,15 @@ For a long time the author has been wanting to push forward the technology used 
 FPV drones generally all use the same OSD chip, a MAX7456, which has long been discontinued by Maxim and is only available
 from China-clone manufacturers under the AT7456/E. 
 
-The MAX7456 chip has major limitations.
-1) only supports characters.
-2) is only available in a very large form factor.
-3) is expensive, and contributes massively to the overall BOM cost.
-4) has a 'large' PCB footprint for a 20x20mm flight controller.
-5) limits software development which is stuck in the 1970's era of text based overlays where only text and crude text-based images
-can be displayed (think Teletext/Ceefax).
+The MAX7456 chip has major limitations:
+
+1. Obsolete Product Lifecycle status - https://www.analog.com/en/products/max7456.html
+2. Only supports characters.
+3. Is only available in a very large form factor.
+4. Is expensive, and contributes massively to the overall BOM cost.
+5. Has a 'large' PCB footprint for a 20x20mm flight controller.
+6. Limits software development which is stuck in the 1970's era of text based overlays where only text and crude
+   text-based images can be displayed (think Teletext/Ceefax).
 
 To reduce BOM cost, and add features and reduce overall PCB footprint, the PixelOSD system can use the same processor
 that runs the flight code.  An example of this can be found in the SPRacingH7RF which uses an STM32H730VBH6 MCU to run
