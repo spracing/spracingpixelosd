@@ -5,6 +5,21 @@
 The SPRacing Pixel OSD system is a system that allows overlaying graphics, including dots; lines; shapes; text onto an
 analog video signal (PAL or NTSC).  It also features signal generation code to generate the video signal sync pulses.
 
+Prototype hardware:
+
+<img src="https://raw.githubusercontent.com/spracing/spracingpixelosd/main/photos/IMG_20190718_222231.jpg" width="800">
+
+Example OSD overlay, showing pixels and text:
+
+<img src="https://raw.githubusercontent.com/spracing/spracingpixelosd/main/photos/IMG_20190519_212953.jpg" width="800">
+
+
+Random Development Videos:
+
+* SPRacingH7RF - 2020/05/16 - https://www.youtube.com/watch?v=yxXjFuN0uPc
+* SPRacingH7CINE - 2020/03/04 - https://www.youtube.com/watch?v=1IUbb08_iKM
+
+
 ## Who made it?
 
 Dominic Clifton created every part of the system, including design, architecture, schematics, prototypes and production
@@ -50,7 +65,16 @@ For the H723/H730/H733/H743/H750 the following peripherals are used.
 * TIM15 - Pixel generation timer.
 * GPIOE - Pixel generation IO.
 
-## Commercially available products
+### Additional components
+
+* *Fast* Analog switch with negative voltage handling.
+* *Fast* signal switching diode.
+* Video filter + passives for sync-pulse noise rejection.
+* ~12 passive components (resistors, capacitors).
+
+## Products
+
+### Commercially available
 
 The SPRacingPixelOSD system is available in these products, this list will be updated as more are made.
 
@@ -59,20 +83,13 @@ The SPRacingPixelOSD system is available in these products, this list will be up
 | SPRacing     | SPRacingH7RF | H730 based flight controller | http://seriouslypro.com/spracingh7rf                   |
 | FlightOne    | LightningH7  | H730 based flight controller | https://flightone.com/flight_controllers.html          |
 
-## Hobby/Maker/Hacker/Prototype projects
+### Hobby/Maker/Hacker/Prototype projects
 
 | Entity   | Project        | Description                       | Website |
 |----------|----------------|-----------------------------------|---------|
 | SPRacing | SPRacingH7CINE | H750 based flight controller      | N/A     |
 | SPRacing | SPRacingH7CL   | H723/H733 based flight controller | N/A     |
 
-
-### Additional components
-
-* *Fast* Analog switch with negative voltage handling.
-* *Fast* signal switching diode.
-* Video filter + passives for sync-pulse noise rejection.
-* ~12 passive components (resistors, capacitors).
 
 ## Why was it created?
 
@@ -210,7 +227,6 @@ comparator's blanking input.
 That is the comparator voltage is either two high or two low if there are two few or two many incorrect-length pulses.
 
 Video sync detection needs to be quick so that boot logos of flight control software can be displayed.
-
 
 ### Generating pixels
 
@@ -393,6 +409,27 @@ The code in the `library` folder, when compared to the `prototype` code has:
 * bug fixes.
 * numerous additions.
 
+## Schematics
+
+There are two schematics, neither have been recently updated and this repository has been created at least
+two years after they were created so there might be minor changes.
+
+### Prototype Schematic
+
+There is a schematic for the prototype using an STM32L432KC, available here, in PDF, PNG and DipTrace formats:
+
+<img src="https://raw.githubusercontent.com/spracing/spracingpixelosd/main/schematics/spracingpixelosd/prototype/SPRacingPixelOSD-L432-Prototype-RevA.png" width="800">
+
+See here: https://github.com/spracing/spracingpixelosd/tree/main/schematics/spracingpixelosd/prototype
+
+### Reference schematic
+
+There is a reference schematic for an STM32H7, available here, in PDF, PNG and DipTrace formats:
+
+<img src="https://raw.githubusercontent.com/spracing/spracingpixelosd/main/schematics/spracingpixelosd/reference/SPRacingH7OSD-RevA.png" width="800">
+
+See here: https://github.com/spracing/spracingpixelosd/tree/main/schematics/spracingpixelosd/reference
+
 
 ## Potential Improvements
 
@@ -417,46 +454,49 @@ OSD systems.
 * F1shpepper Tiny OSD - Isn't frame-buffer based. Doesn't integrate well into FC systems, no published schematics, not used in commercial projects.
 * FrSkyOSD - More grey-scales, uses a resistor ladder, requires purchase from FrSky, high BOM cost, similar overall PCB footprint, no published code or schematics. Uses a UART for FC->OSD communication, no direct frame-buffer access.
 * BrainFPV - FPGA based, no published code or schematics.
+* SuperOSD - Uses two PIC processors, low resolution, old, unmaintained, archived.
 
 ## History/Timeline
 
 Dominic Clifton has wanted to improve the state of OSD systems used in drones since way back when everyone was using the
 Arduino MAX7456 based MininOSD system with MultiWII way back in 2014.
 
-2013/2014 - MinimOSD system used with MultiWII.  
-2015 - Dominic designed and shipped the SPRacingF3 flight controller under the SPRacing brand.
-2015 - Dominic started designing the SPRacingOSD add-on board for the SPRacingF3.  The idea was to create an OSD to
+* 2010 - SuperOSD system by Thomas Oldbury created.
+* 2013/2014 - MinimOSD system first used by Dominic with MultiWII.
+* 2015 - Dominic designed and shipped the SPRacingF3 flight controller under the SPRacing brand.
+* 2015 - Dominic started designing the SPRacingOSD add-on board for the SPRacingF3.  The idea was to create an OSD to
 replace the MinimOSD and then later transitiion the SPRacingOSD to a pixel based OSD.  The latter never happened due to
 the amount of work required on the flight controller and Cleanflight projects.
-2016 - SPRacingOSD add-on board shipped.
-2016 - Immersion RC Vortex 285 shipped with Pixel based OSD, but limited OSD/FC integration with Cleanflight.
-2017 - Fishpepper posts details and code for his pixel-based, but not framebuffer based, tinyOSD.
-2019-Q1 - INAV OSD repo created, schematic used an STM32F103.  Dominic contacted F1am and initially had some technical discussions, but no schematics or
+* 2016 - SPRacingOSD add-on board shipped.
+* 2016 - Immersion RC Vortex 285 shipped with Pixel based OSD, but limited OSD/FC integration with Cleanflight.
+* 2017 - Fishpepper posts details and code for his pixel-based, but not framebuffer based, tinyOSD.
+* 2019-Q1 - INAV OSD repo created, schematic used an STM32F103.  Dominic contacted F1am and initially had some technical discussions, but no schematics or
 running code were shared between either parties.  F1am was then offered a job by FrSky and communicaton ceased due to terms with
 FrSky. F1am wanted a PixelOSD system that can be used by any flight controller, with a UART based protocol.
 Dominic, still wanting a pixel OSD system then spend a week designing a schematic and a week writing protocol code and
 got pixels displayed on the screen, see photos folder.  Note that it's no-coincidence the original prototype
 SPRacingPixelOSD prototype and the final production both use STM32L43x MCUs due to technical discussions.  Likely some
 of the use of STM processor hardware features was used by both projects in the same way, but there's no confirmation of this.
-2019-Q2 - SPRacingPixelOSD ported to H7.
-2019-Q3 - SPRacingPixelOSD code integrated into Betaflight.
-2019-Q4 - FlightOne interested in PixelOSD system, Dominic designed the LightningH7 Flight Controller for FlightOne.
-2019-Q4 - SPRacingPixelOSD code moved into a library, to be used by both Betaflight and FlightOne and Dominic integrated into both.
-2020-Q1 - FlightOne shipped the LightningH7 FC with the SPRacingPixelOSD library.
-2020-Q2 - FrSky shipped the FrSkyOSD.
-2021-Q1 - Dominic designed the SPRacingH7RF FC with ELRS SPI, SPRacingPixelOSD, STM32H730 MCU and OctoSPI memory mapped flash.
-2021-Q4 - SPRacing shipped the SPRacingH7RF.
+* 2019-Q2 - SPRacingPixelOSD ported to H7.
+* 2019-Q3 - SPRacingPixelOSD code integrated into Betaflight.
+* 2019-Q4 - FlightOne interested in PixelOSD system, Dominic designed the LightningH7 Flight Controller for FlightOne.  SPRacingPixelOSD code moved into a library, to be used by both Betaflight and FlightOne and Dominic integrated into both.
+* 2020-Q1 - FlightOne shipped the LightningH7 FC with the SPRacingPixelOSD library.
+* 2020-Q2 - FrSky shipped the FrSkyOSD.
+* 2021-Q1 - Dominic designed the SPRacingH7RF FC with ELRS SPI, SPRacingPixelOSD, STM32H730 MCU and OctoSPI memory mapped flash.
+* 2021-Q4 - SPRacing shipped the SPRacingH7RF.
 
 flight controller, the idea was to write OSD code for an F3 using initially using a MAX7456 and then later to design
 a pixel based system
 
-## Acknowledgements
+## Acknowledgements and references.
 
+Thomas Oldbury - SuperOSD system. https://code.google.com/archive/p/super-osd/
+MWOSD - MultiWII OSD. http://www.mwosd.com/
 F1shpepper - TinyOSD video timing calculation.  https://fishpepper.de/2019/03/11/tinyosd-tinyfinity-a-tiny-opensource-video-tx-with-full-graphic-osd/
 F1am - Prototype MCU selection ideas and technical discussions - https://github.com/fiam / https://www.frsky-rc.com/product/frsky-osd/
 Maxim - Datasheets and application notes.
 Renasas - Datasheets and application notes.
-ImmersionRC - A vortex OSD schematics was reverse engineered before this project was completed, included in schematics, some technical details were investigated but discarded.
+ImmersionRC - A vortex OSD schematics was reverse engineered before this project was completed, included in schematics, some technical details were investigated but discarded. https://www.immersionrc.com/fpv-products/vortex-racing-quad/
 FrSky - An FrSky OSD schematic was reverse engineered /after/ this project was completed, included in schematics.
 SPRacing Customers - For being awesome and supporting this work though purchases and feedback.
 

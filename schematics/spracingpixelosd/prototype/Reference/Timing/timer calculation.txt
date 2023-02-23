@@ -1,0 +1,56 @@
+calculate timer period
+
+
+PAL
+
+1,000,000 / 64us = 15625 = x
+
+80,000,000 / x = 5120
+
+
+5120 = 64us
+
+5120 / 64 = 80 clocks per us
+
+frame time of 52 us = 52 * 80 = 4160
+
+64 - 52 = 12us
+5120 - 4160 = 960
+
+
+640 * 6 = 3840 (3840 / 80 = 48us)
+520 * 8 = 4160 (4160 / 80 = 52us)
+720 * 6 = 4320 (4320 / 80 = 54us)
+4320 / horizontal resolution (720) = 6
+
+
+54,000ns (54us) / 720 = 75ns
+
+line sync = 4.7us
+
+4.7 * 80 = 376
+
+back porch = 5.8us
+
+5.8 us * 80 = 464
+
+start of frame = line sync + back porch
+
+4.7 + 5.8 = 10.5us
+
+(4.7 + 5.8) * 80 = 840
+or: 376 + 464 = 840
+
+
+Max 7456 resolution
+
+(columns * character width) x (rows * character height)
+30 * 12 x 18 * 16  =  360 x 288 (pal)
+30 * 12 x 18 * 13  =  360 x 234 (ntsc)
+
+
+FishPepper OSD resolution
+
+? * 476 (ntsc)
+
+
