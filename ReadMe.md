@@ -598,9 +598,13 @@ The code in the `library` folder, when compared to the `prototype` code has:
 
 * improved video sync detection.
 * improved video sync stability in noisy environments. (e.g. when used on a quad with more electrical noise).
-* better video output.
-* bug fixes.
+* better camera compatibility.
+* better video output signals.
 * numerous additions.
+* support for the analog switch.
+* the prototype cannot generate black pixels, the overlay appears like a watermark.
+* more organized code; the prototype code was quicker and dirtier and is proof-of-concept code.
+* bug fixes.
 
 ### Further work
 
