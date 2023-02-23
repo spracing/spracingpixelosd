@@ -100,8 +100,8 @@ The SPRacingPixelOSD system is available in these products, this list will be up
 ## Why was it created?
 
 For a long time the author has been wanting to push forward the technology used in flight-controller hardware and software.
-FPV drones generally all use the same OSD chip, a MAX7452, which has long been discontinued by Maxim and is only available
-from China-clone manufacturers under the AT7453/E. 
+FPV drones generally all use the same OSD chip, a MAX7456, which has long been discontinued by Maxim and is only available
+from China-clone manufacturers under the AT7456/E. 
 
 The MAX7456 chip has major limitations.
 1) only supports characters.
