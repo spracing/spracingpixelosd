@@ -84,10 +84,12 @@ For the H723/H730/H733/H743/H750 the following peripherals are used.
 
 The SPRacingPixelOSD system is available in these products, this list will be updated as more are made.
 
-| Manufacturer | Product      | Description                  | Website                                                |
-|--------------|--------------|------------------------------|--------------------------------------------------------|
-| SPRacing     | SPRacingH7RF | H730 based flight controller | http://seriouslypro.com/spracingh7rf                   |
-| FlightOne    | LightningH7  | H730 based flight controller | https://flightone.com/flight_controllers.html          |
+| Manufacturer | Product      | Description                  | Website                                           |
+|--------------|--------------|------------------------------|---------------------------------------------------|
+| SPRacing     | SPRacingH7RF | H730 based flight controller | http://seriouslypro.com/spracingh7rf              |
+| FlightOne *  | LightningH7  | H730 based flight controller | ~~https://flightone.com/flight_controllers.html~~ |
+
+* Do not order anything from the FlightOne website, they are not currently fulfilling any orders.
 
 ### Hobby/Maker/Hacker/Prototype projects
 
