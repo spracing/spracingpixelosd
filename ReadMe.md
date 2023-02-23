@@ -156,34 +156,6 @@ As noted below, the code in the `prototype` folder contains code from other proj
 the same terms as above and thus must NOT be used for production code as the licenses conflict with each other.
 Many thanks to the respective authors, listed in the 'Acknowledgements and references' later in this document.
 
-## Software
-
-The software was originally written to be a stand-alone system that runs on an STM32L432KC and was developed using the 
-NucleoL432KC development board.
-
-* https://www.st.com/en/evaluation-tools/nucleo-l432kc.html
-
-The system was then later directly integrated into a popular flight control system, but was never released in this form.
-
-However, for the curious, here's a branch with it:
-
-* https://github.com/spracing/betaflight/tree/bf-spracingh7cine-target-20200304-before-osdlib
-
-Refer to the following directories:
-
-* https://github.com/spracing/betaflight/blob/bf-spracingh7cine-target-20200304-before-osdlib/src/main/target/SPRACINGH7CINE
-* https://github.com/spracing/betaflight/tree/bf-spracingh7cine-target-20200304-before-osdlib/src/main/drivers/spracingpixelosd
-* https://github.com/spracing/betaflight/tree/bf-spracingh7cine-target-20200304-before-osdlib/src/main/osd
-* https://github.com/spracing/betaflight/blob/bf-spracingh7cine-target-20200304-before-osdlib/src/main/io/displayport_spracing_pixel_osd.c
-
-Later, the video sync and video generation code was moved into a library for a number of reasons:
-
-1) re-use.
-2) maintainability.
-3) allows use with code compiled using a different compiler, as long as the ABI is common.
-4) cannot be broken by changes to the flight-controller code.
-5) allows the OSD bios code to be updated and released on a different schedule to the flight-controller code.
-
 ## Theory of operation.
 
 ### Video signal
@@ -479,6 +451,34 @@ the system.  For a flight controller this means that it's more important to hand
 point handling a gyro EXTI if you can't see where you're going when flying FPV due to loss-of-sync!  One slightly late
 handling of a gyro EXTI signal won't cause noticeable flight behavior.
 
+## Software
+
+The software was originally written to be a stand-alone system that runs on an STM32L432KC and was developed using the
+NucleoL432KC development board.
+
+* https://www.st.com/en/evaluation-tools/nucleo-l432kc.html
+
+The system was then later directly integrated into a popular flight control system, but was never released in this form.
+
+However, for the curious, here's a branch with it:
+
+* https://github.com/spracing/betaflight/tree/bf-spracingh7cine-target-20200304-before-osdlib
+
+Refer to the following directories:
+
+* https://github.com/spracing/betaflight/blob/bf-spracingh7cine-target-20200304-before-osdlib/src/main/target/SPRACINGH7CINE
+* https://github.com/spracing/betaflight/tree/bf-spracingh7cine-target-20200304-before-osdlib/src/main/drivers/spracingpixelosd
+* https://github.com/spracing/betaflight/tree/bf-spracingh7cine-target-20200304-before-osdlib/src/main/osd
+* https://github.com/spracing/betaflight/blob/bf-spracingh7cine-target-20200304-before-osdlib/src/main/io/displayport_spracing_pixel_osd.c
+
+Later, the video sync and video generation code was moved into a library for a number of reasons:
+
+1) re-use.
+2) maintainability.
+3) allows use with code compiled using a different compiler, as long as the ABI is common.
+4) cannot be broken by changes to the flight-controller code.
+5) allows the OSD bios code to be updated and released on a different schedule to the flight-controller code.
+
 ### Library 
 
 The library is in the `library` folder of this repository.
@@ -543,14 +543,14 @@ The library can be compiled so that it can be:
 
 All the above scenarios were performed during development of the library.
 
-### Building
+#### Building
 
 ```
 $ cd source/library
 $ make TARGET=SPRACINGH7RF
 ```
 
-### Artifacts
+#### Artifacts
 
 Artifacts appear in the `build` folder.
 
@@ -561,7 +561,7 @@ The following artifacts are generated:
 3) Binary, suitable for flashing to an MCU.
 4) MAP file, useful for verification of configured memory addresses when integrating with FC build systems.
 
-### Flashing
+#### Flashing
 
 Example script for building and flashing via DFU can be found in `library\support\scripts\build_and_flash.sh`.
 
@@ -571,7 +571,7 @@ e.g.
 $ ./supports/scripts/build_and_flash.sh SPRACINGH7RF
 ```
 
-### Debugging
+#### Debugging
 
 The library can be compiled with debug symbols and source-level debugged using GDB, just load the symbols from the 
 `.elf` artifact.
@@ -611,7 +611,7 @@ The code in the `library` folder, when compared to the `prototype` code has:
 * more organized code; the prototype code was quicker and dirtier and is proof-of-concept code.
 * bug fixes.
 
-### Further work
+## Further work
 
 PR's that cover the following are sought:
 
