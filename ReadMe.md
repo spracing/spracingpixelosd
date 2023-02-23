@@ -5,7 +5,7 @@
 The SPRacing Pixel OSD system is a system that allows overlaying graphics, including dots; lines; shapes; text onto an
 analog video signal (PAL or NTSC).  It also features signal generation code to generate the video signal sync pulses.
 
-Prototype hardware:
+### Prototype hardware
 
 <img src="https://raw.githubusercontent.com/spracing/spracingpixelosd/main/photos/IMG_20190718_222231.jpg" width="800">
 
@@ -14,10 +14,16 @@ Example OSD overlay, showing pixels and text:
 <img src="https://raw.githubusercontent.com/spracing/spracingpixelosd/main/photos/IMG_20190519_212953.jpg" width="800">
 
 
-Random Development Videos:
+### Random Development Videos
 
 * SPRacingH7RF - 2020/05/16 - https://www.youtube.com/watch?v=yxXjFuN0uPc
 * SPRacingH7CINE - 2020/03/04 - https://www.youtube.com/watch?v=1IUbb08_iKM
+
+### Example of flight-controller PCBs
+
+<img src="https://raw.githubusercontent.com/spracing/spracingpixelosd/main/photos/IMG_20230223_145659.jpg" width="1024">
+
+Here you can see the typical PCB footprint, on the SPRacingH7CINE (Left), SPRacingH7RF (Center), SPRacingH7CL (Right) 
 
 
 ## Who made it?
