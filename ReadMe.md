@@ -300,6 +300,10 @@ will be started at the wrong time resulting in display corruption.
 
 Video sync output is only started if sync detection fails.
 
+### Circuit design/operation.
+
+Coming soon. In the meantime read the source-code.
+
 ### Interrupts
 
 Missing an interrupt is BAD.
