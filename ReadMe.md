@@ -351,30 +351,53 @@ which will change how the voltage is divided.
 
 Thus, the voltage on the VIDEO_IN_MASKED can be increased or decreased by the MCU's GPIO and DAC outputs.
 
-Given that the GPIO port has 4 wires connected to it, there are only certain valid combinations of IO levels that make
-any sense.
+Given that the GPIO port has 4 wires connected to it and that VIDEO_SYNC_OUT is combined, there are only certain valid
+combinations of IO levels that make any sense.
 
 This table will be updated, as time permits, with the valid combinations. For now refer to the source-code where the 
 line-buffer is generated from the pixel buffer.
 
-| WSF | WSS | OME | BS1 | Valid? | Effect |
-|-----|-----|-----|-----|--------|--------|
-| 0   | 0   | 0   | 0   | TODO   | TODO   |
-| 0   | 0   | 0   | 1   | TODO   | TODO   |
-| 0   | 0   | 1   | 0   | TODO   | TODO   |
-| 0   | 0   | 1   | 1   | TODO   | TODO   |
-| 0   | 1   | 0   | 0   | TODO   | TODO   |
-| 0   | 1   | 0   | 1   | TODO   | TODO   |
-| 0   | 1   | 1   | 0   | TODO   | TODO   |
-| 0   | 1   | 1   | 1   | TODO   | TODO   |
-| 1   | 0   | 0   | 0   | TODO   | TODO   |
-| 1   | 0   | 0   | 1   | TODO   | TODO   |
-| 1   | 0   | 1   | 0   | TODO   | TODO   |
-| 1   | 0   | 1   | 1   | TODO   | TODO   |
-| 1   | 1   | 0   | 0   | TODO   | TODO   |
-| 1   | 1   | 0   | 1   | TODO   | TODO   |
-| 1   | 1   | 1   | 0   | TODO   | TODO   |
-| 1   | 1   | 1   | 1   | TODO   | TODO   |
+| Ref. | VSO | WSF | WSS | OME | BS1 | Valid? | Effect |
+|------|-----|-----|-----|-----|-----|--------|--------|
+| 0    | 0   | 0   | 0   | 0   | 0   | TODO   | TODO   |
+| 1    | 0   | 0   | 0   | 0   | 1   | TODO   | TODO   |
+| 2    | 0   | 0   | 0   | 1   | 0   | TODO   | TODO   |
+| 3    | 0   | 0   | 0   | 1   | 1   | TODO   | TODO   |
+| 4    | 0   | 0   | 1   | 0   | 0   | TODO   | TODO   |
+| 5    | 0   | 0   | 1   | 0   | 1   | TODO   | TODO   |
+| 6    | 0   | 0   | 1   | 1   | 0   | TODO   | TODO   |
+| 7    | 0   | 0   | 1   | 1   | 1   | TODO   | TODO   |
+| 8    | 0   | 1   | 0   | 0   | 0   | TODO   | TODO   |
+| 9    | 0   | 1   | 0   | 0   | 1   | TODO   | TODO   |
+| 10   | 0   | 1   | 0   | 1   | 0   | TODO   | TODO   |
+| 11   | 0   | 1   | 0   | 1   | 1   | TODO   | TODO   |
+| 12   | 0   | 1   | 1   | 0   | 0   | TODO   | TODO   |
+| 13   | 0   | 1   | 1   | 0   | 1   | TODO   | TODO   |
+| 14   | 0   | 1   | 1   | 1   | 0   | TODO   | TODO   |
+| 15   | 0   | 1   | 1   | 1   | 1   | TODO   | TODO   |
+| 16   | 1   | 0   | 0   | 0   | 0   | TODO   | TODO   |
+| 17   | 1   | 0   | 0   | 0   | 1   | TODO   | TODO   |
+| 18   | 1   | 0   | 0   | 1   | 0   | TODO   | TODO   |
+| 19   | 1   | 0   | 0   | 1   | 1   | TODO   | TODO   |
+| 20   | 1   | 0   | 1   | 0   | 0   | TODO   | TODO   |
+| 21   | 1   | 0   | 1   | 0   | 1   | TODO   | TODO   |
+| 22   | 1   | 0   | 1   | 1   | 0   | TODO   | TODO   |
+| 23   | 1   | 0   | 1   | 1   | 1   | TODO   | TODO   |
+| 24   | 1   | 1   | 0   | 0   | 0   | TODO   | TODO   |
+| 25   | 1   | 1   | 0   | 0   | 1   | TODO   | TODO   |
+| 26   | 1   | 1   | 0   | 1   | 0   | TODO   | TODO   |
+| 27   | 1   | 1   | 0   | 1   | 1   | TODO   | TODO   |
+| 28   | 1   | 1   | 1   | 0   | 0   | TODO   | TODO   |
+| 29   | 1   | 1   | 1   | 0   | 1   | TODO   | TODO   |
+| 30   | 1   | 1   | 1   | 1   | 0   | TODO   | TODO   |
+| 31   | 1   | 1   | 1   | 1   | 1   | TODO   | TODO   |
+
+Care must be taken not to enable/generate PWM signals on the VIDEO_SYNC_OUT pin at the wrong time, and that the 
+timer's idle levels are correct, and that too high a voltage is not given to the video filter.
+
+In practice though it turned out that you either get no output or the wrong output at the wrong time and no damage
+to the MCU, camera, video filter has ever been done even after trying all the above combinations at one point or
+another during development. 
 
 The VIDEO_IN_MASKED is then fed through a video filter.  The video filter is there for 3 primary reasons.
 
