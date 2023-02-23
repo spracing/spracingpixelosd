@@ -571,10 +571,17 @@ $ ./supports/scripts/build_and_flash.sh SPRACINGH7RF
 The library can be compiled with debug symbols and source-level debugged using GDB, just load the symbols from the 
 `.elf` artifact.
 
-e.g. For the SPRacingH7RF use this GDB commands:
+``` bash
+$ make DEBUG=1 TARGET=<TARGET> DEVELOPER_BUILD=YES
+```
+
+Then flash the `/library/build/<TARGET>_DEVELOPER_DEBUG.bin` to the FC via DFU. 
+
+Then debug your application (e.g. flight control software) in the usual way, ensuring that you issue the following GDB
+command to load the symbols.
 
 ```
-add-symbol-file /library/build/SPRACINGH7RF_DEVELOPER_DEBUG.elf
+add-symbol-file /library/build/<TARGET>_DEVELOPER_DEBUG.elf
 ```
 
 ### Prototype
