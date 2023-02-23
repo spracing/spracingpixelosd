@@ -113,7 +113,7 @@ flight code, Pixel OSD code and SPI ExpressLRS RF radio receiver code - all in a
 
 The original prototype and code was created in April 2019.
 
-## What license is the available under?
+## What license is it available under?
 
 The schematics, documentation and code are available under the Apache License, content of the NOTICE file, repeated here
 below, needs to be included wherever schematics, code and documentation are used or in any system that displays text via
@@ -140,6 +140,11 @@ The Initial Developer of the SPRacingPixelOSD system is Dominic Clifton.
 Copyright 2019 - 2023 Dominic Clifton. All Rights Reserved.
 ```
 
+### IMPORTANT
+
+As noted below, the code in the `prototype` folder contains code from other projects, which are not licensed under
+the same terms as above and thus must NOT be used for production code as the licenses conflict with each other.
+Many thanks to the respective authors, listed in the 'Acknowledgements and references' later in this document.
 
 ## Software
 
@@ -367,7 +372,7 @@ All the above scenarios were performed during development of the library.
 
 ```
 cd `library`
-make TARGET=SPRACINGH7RF DEVELOPER_BUILD=NO
+make TARGET=SPRACINGH7RF
 ```
 
 ### Artifacts
@@ -401,6 +406,9 @@ The original prototype code, which was unmaintained after the initial developmen
  
 WARNING!  Do NOT use the code from the `prototype`folder other than for learning/education purposes.  i.e. sure, run
 it if you like, but for anything commercial use the code in the `library` folder.
+
+Furthermore, the code in the prototype contains code from other projects, which are not licensed under the same terms as
+the library code and thus must not be used for production code as the licenses conflict with each other.
 
 The code in the `library` folder, when compared to the `prototype` code has:
 * improved video sync detection.
