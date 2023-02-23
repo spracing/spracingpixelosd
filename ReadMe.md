@@ -159,22 +159,23 @@ Many thanks to the respective authors, listed in the 'Acknowledgements and refer
 The software was originally written to be a stand-alone system that runs on an STM32L432KC and was developed using the 
 NucleoL432KC development board.
 
-https://www.st.com/en/evaluation-tools/nucleo-l432kc.html
+* https://www.st.com/en/evaluation-tools/nucleo-l432kc.html
 
 The system was then later directly integrated into a popular flight control system, but was never released in this form.
 
 However, for the curious, here's a branch with it:
 
-https://github.com/spracing/betaflight/tree/bf-spracingh7cine-target-20200304-before-osdlib
+* https://github.com/spracing/betaflight/tree/bf-spracingh7cine-target-20200304-before-osdlib
 
 Refer to the following directories:
 
-https://github.com/spracing/betaflight/blob/bf-spracingh7cine-target-20200304-before-osdlib/src/main/target/SPRACINGH7CINE
-https://github.com/spracing/betaflight/tree/bf-spracingh7cine-target-20200304-before-osdlib/src/main/drivers/spracingpixelosd
-https://github.com/spracing/betaflight/tree/bf-spracingh7cine-target-20200304-before-osdlib/src/main/osd
-https://github.com/spracing/betaflight/blob/bf-spracingh7cine-target-20200304-before-osdlib/src/main/io/displayport_spracing_pixel_osd.c
+* https://github.com/spracing/betaflight/blob/bf-spracingh7cine-target-20200304-before-osdlib/src/main/target/SPRACINGH7CINE
+* https://github.com/spracing/betaflight/tree/bf-spracingh7cine-target-20200304-before-osdlib/src/main/drivers/spracingpixelosd
+* https://github.com/spracing/betaflight/tree/bf-spracingh7cine-target-20200304-before-osdlib/src/main/osd
+* https://github.com/spracing/betaflight/blob/bf-spracingh7cine-target-20200304-before-osdlib/src/main/io/displayport_spracing_pixel_osd.c
 
 Later, the video sync and video generation code was moved into a library for a number of reasons:
+
 1) re-use.
 2) maintainability.
 3) allows use with code compiled using a different compiler, as long as the ABI is common.
@@ -204,40 +205,42 @@ This system can handle both of the above.  However, most modern cameras output a
 
 You can read more about the PAL/NTSC video signal specifications here:
 
-http://martin.hinner.info/vga/pal.html
+* http://martin.hinner.info/vga/pal.html
 
 ### Detecting sync
 
 In order to detect sync, the system uses the following techniques.
 
-1) Low-cost hardware Video filter to eliminate noise.  A FMS6141 was selected.
+1) Low-cost hardware Video filter to eliminate noise and boost the output voltage for wider voltage thresholds.
 
-https://www.onsemi.com/products/custom-assp/audio-video-assp/video-conditioning/fms6141
+   A FMS6141 was selected.
+
+   * https://www.onsemi.com/products/custom-assp/audio-video-assp/video-conditioning/fms6141
 
 2) A hardware RC low-pass filter comprised of a resistor and capacitor.
 
-Formula: 1/2pi(RF)(CF) = 1/2pi(100)(570) = 2.79Mhz
+   Formula: 1/2pi(RF)(CF) = 1/2pi(100)(570) = 2.79Mhz
 
-100R and 560pF was used to get pretty close using standard values.  IMPORTANT: Use high-tolerance parts!
+   100R and 560pF was used to get pretty close using standard values.  IMPORTANT: Use high-tolerance parts!
 
-Refer to Renesas AN1269/AN1316 - "One Transistor Enables Clean HDTV and NTSC Video Sync Separation" 
-See `application-notes` folder in this repository.
+   Refer to Renesas AN1269/AN1316 - "One Transistor Enables Clean HDTV and NTSC Video Sync Separation" 
+   See `application-notes` folder in this repository.
 
 3) A fast comparator (usually internal to the MCU) that generates an ISR for both signal edge pulses.
 
-4) A DAC to generate a reference voltage for the comparator.  No external pin is required when using a comparator in the
-MCU as it is routed internally on the MCU, but the voltage can also be exposed on a pin, for debugging purposes.
+4) A DAC to generate a reference voltage for the comparator.  No external pin is required when using a comparator
+   in the MCU as it is routed internally on the MCU, but the voltage can also be exposed on a pin, for debugging purposes.
 
 5) A timer which is linked to the comparator edge transition signal, to record the sync pulse length in hardware via
-a capture compare channel.
+   a capture compare channel.
 
 6) Gating of the comparator output signal for the horizontal field portion of the signal, so that voltages close to the 
-comparator threshold voltage do not trigger the timer or additional ISRs.  This is technique is very important and is
-achieved by using an additional channel on the comparator-transition-linked timer which is internally linked to the
-comparator's blanking input.
+   comparator threshold voltage do not trigger the timer or additional ISRs.  This is technique is very important and is
+   achieved by using an additional channel on the comparator-transition-linked timer which is internally linked to the
+   comparator's blanking input.
 
 7) Counting of short-vs-long sync pulses to detect the start of the frame and adjust the DAC output voltage.
-That is the comparator voltage is either two high or two low if there are two few or two many incorrect-length pulses.
+   That is the comparator voltage is either two high or two low if there are two few or two many incorrect-length pulses.
 
 Video sync detection needs to be quick so that boot logos of flight control software can be displayed.
 
@@ -338,7 +341,7 @@ WHITE_SOURCE_FIXED signals.
 
 The voltage divider circuit is formed of 4 resistors:
 
-First half:
+First half (before the diode):
 1. WHITE_SOURCE -> WHITE_SOURCE_OUT
 2. VIDEO_SYNC_OUT -> VIDEO_SYNC
 
@@ -499,23 +502,23 @@ and make `.mk` and header `.h` files in `source\library\src\main\<TARGET>\*`
 For integration into flight control system, the flight controller linker scripts needs to reserve some RAM used by
 the library.  An example of this can be found here:
 
-https://github.com/spracing/betaflight/blob/565e48a1460bf01f4053733e78051ecdda55cb76/src/link/stm32_ram_h730_exst_spracingpixelosd.ld#L58-L82
+* https://github.com/spracing/betaflight/blob/565e48a1460bf01f4053733e78051ecdda55cb76/src/link/stm32_ram_h730_exst_spracingpixelosd.ld#L58-L82
 
 The flight control system also needs to verify the presence of the library at the configured memory addresses. An
 example of this is here:
 
-https://github.com/spracing/betaflight/blob/565e48a1460bf01f4053733e78051ecdda55cb76/src/main/drivers/spracingpixelosd/spracing_pixel_osd_library.c#L39-L42
+* https://github.com/spracing/betaflight/blob/565e48a1460bf01f4053733e78051ecdda55cb76/src/main/drivers/spracingpixelosd/spracing_pixel_osd_library.c#L39-L42
 
 The flight controller needs to ensure that it reserves hardware resources that might otherwise be used by it, and
 then call initialisation functions in the library.  An example of this is here:
 
-https://github.com/spracing/betaflight/blob/565e48a1460bf01f4053733e78051ecdda55cb76/src/main/drivers/spracingpixelosd/spracing_pixel_osd.c#L341-L368
+* https://github.com/spracing/betaflight/blob/565e48a1460bf01f4053733e78051ecdda55cb76/src/main/drivers/spracingpixelosd/spracing_pixel_osd.c#L341-L368
 
 The flight control system also needs to ensure that interrupts for the OSD system are routed to the library.
 
 And example of this can be found here:
 
-https://github.com/spracing/betaflight/blob/565e48a1460bf01f4053733e78051ecdda55cb76/src/main/drivers/spracingpixelosd/spracing_pixel_osd.c#L101-L125
+* https://github.com/spracing/betaflight/blob/565e48a1460bf01f4053733e78051ecdda55cb76/src/main/drivers/spracingpixelosd/spracing_pixel_osd.c#L101-L125
 
 The flight control system then needs to draw to the frame-buffer and handle the `onVSync` callback from the library.
 The `onVSync` handler can be used so the flight controller knows which of the two frame buffers to draw into and which
@@ -523,11 +526,11 @@ is being used to display the video overlay.
 
 Some example frame-buffer rendering code can be found here:
 
-https://github.com/spracing/betaflight/blob/565e48a1460bf01f4053733e78051ecdda55cb76/src/main/drivers/spracingpixelosd/framebuffer.c
+* https://github.com/spracing/betaflight/blob/565e48a1460bf01f4053733e78051ecdda55cb76/src/main/drivers/spracingpixelosd/framebuffer.c
 
 Some example high-level drawing routine implementation can be found here:
 
-https://github.com/spracing/betaflight/blob/565e48a1460bf01f4053733e78051ecdda55cb76/src/main/drivers/spracingpixelosd/framebuffer_canvas.c
+* https://github.com/spracing/betaflight/blob/565e48a1460bf01f4053733e78051ecdda55cb76/src/main/drivers/spracingpixelosd/framebuffer_canvas.c
 
 The library can be compiled so that it can be:
 
@@ -641,13 +644,13 @@ See here: https://github.com/spracing/spracingpixelosd/tree/main/schematics/spra
 ## Potential Improvements
 
 1) The sync stability could be improved, by using the comparator-timer-triggered-delayed ADC conversion to periodically
-sample the sync-voltage and dynamically adjust the thresholds and DAC voltage.  On production boards this wasn't found
-to be necessary but some code that initialises the ADC was written for this purpose.  This is also why ADC1 is reserved
-for video, so DO NOT use TIM2 and ADC1 in flight-controller code.
+   sample the sync-voltage and dynamically adjust the thresholds and DAC voltage.  On production boards this wasn't 
+   found to be necessary but some code that initialises the ADC was written for this purpose.  This is also why ADC1 is
+   reserved for video, so DO NOT use TIM2 and ADC1 in flight-controller code.
 2) Speed-up line-buffer generation.
 3) Use 4 more IO lines to generate different shades of grey, no extra DMA bandwidth required, but the framebuffer memory
-requirement would double.  Would use more CPU time to generate line buffers, adds additional load to flight controller 
-rendering code (e.g. 4-8 bits per pixel instead of 2).
+   requirement would double.  Would use more CPU time to generate line buffers, adds additional load to flight
+   controller rendering code (e.g. 4-8 bits per pixel instead of 2).
 
 
 ## Alternatives
