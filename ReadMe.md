@@ -541,8 +541,8 @@ All the above scenarios were performed during development of the library.
 ### Building
 
 ```
-cd `library`
-make TARGET=SPRACINGH7RF
+$ cd source/library
+$ make TARGET=SPRACINGH7RF
 ```
 
 ### Artifacts
