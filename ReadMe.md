@@ -421,6 +421,43 @@ inside the MCU.
 There are also two connections to ADC1 for VIDEO_IN and VIDEO_OUT, these can be used to see if a camera is connected,
 measure sync pulse or black-level voltages and check video output generation.
 
+### Component selection
+
+All components, in the reference schematic can of course be changed, optimized or substituted at will.
+
+The reference design is optimized for the lowest BOM count, using the cheapest and most-available parts at the time.
+Over time availability and prices change, so feel free to do what is necessary for your project when using the 
+schematics.
+
+However, be aware that:
+
+* The resistor values are all specific to the diode and video filter.  Changing the diode will require re-verification 
+  of voltages and video signal pixel generation timing/quality. 
+* The resistor and capacitor values on the RC sync filter are CRITICAL.
+* The analog switch was the fastest that was available at the time, and handles negative voltages.  Using a slower one
+  will reduce or break pixel generation timing/quality.  Using one without negative voltage handling limits
+  compatability to cameras with a 0v or positive sync voltage only.  Be aware that older video equipment uses a ~ -0.3v
+  sync voltage, and 0v black level. 
+* MCU can be changed, but check peripheral interconnect matrix and finer details of peripheral interconnect signals that
+  your chosen MCU has.
+
+#### MCU selection
+
+* H730 is a really-good choice for any non-flight control application as it cheap and handles it
+  with ease.
+* L4 is a great choice for basic integration with a VTX for example, with FC->VTX communication over a
+  UART.
+* If you want a single MCU solution for FC+OSD, with no external flash, then the H723/H733 are great.
+* If you want the cheapest possible FC+OSD solution, and need a lot of flash, then the H730 is great, and has the 
+  fastest clock speed at 520-550Mhz.
+* If you want a cheap FC+OSD solution and need a lot of RAM, then the H750 is great, but slower than the H723/730/733.
+* If you want a good all round FC+OSD solution, with lots of flash and RAM then the H743/H753 are good candidates
+  as they have more RAM and flash than the H723/H730/H733 but run slower at 480Mhz.
+* A CPU with support for memory mapped flash is good if you want lots of static graphics/artwork, as you can use a
+  QUADSPI or OCTOSPI flash and write code to copy directly from external flash into the framebuffer.  Probably also via 
+  DMA too.
+
+
 ### Interrupts
 
 Missing an interrupt is BAD.
