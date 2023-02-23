@@ -652,15 +652,15 @@ Arduino MAX7456 based MininOSD system with MultiWII way back in 2014.
 
 ## Acknowledgements and references.
 
-Thomas Oldbury - SuperOSD system. https://code.google.com/archive/p/super-osd/
-MWOSD - MultiWII OSD. http://www.mwosd.com/
-F1shpepper - TinyOSD video timing calculation.  https://fishpepper.de/2019/03/11/tinyosd-tinyfinity-a-tiny-opensource-video-tx-with-full-graphic-osd/
-F1am - Prototype MCU selection ideas and technical discussions - https://github.com/fiam / https://www.frsky-rc.com/product/frsky-osd/
-Maxim - Datasheets and application notes.
-Renasas - Datasheets and application notes.
-ImmersionRC - A vortex OSD schematics was reverse engineered before this project was completed, included in schematics, some technical details were investigated but discarded. https://www.immersionrc.com/fpv-products/vortex-racing-quad/
-FrSky - An FrSky OSD schematic was reverse engineered /after/ this project was completed, included in schematics.
-SPRacing Customers - For being awesome and supporting this work though purchases and feedback.
+* Thomas Oldbury - SuperOSD system. https://code.google.com/archive/p/super-osd/
+* MWOSD - MultiWII OSD. http://www.mwosd.com/
+* F1shpepper - TinyOSD video timing calculation.  https://fishpepper.de/2019/03/11/tinyosd-tinyfinity-a-tiny-opensource-video-tx-with-full-graphic-osd/
+* Fiam - Prototype MCU selection ideas and technical discussions - https://github.com/fiam / https://www.frsky-rc.com/product/frsky-osd/
+* Maxim - Datasheets and application notes.
+* Renasas - Datasheets and application notes.
+* ImmersionRC - A vortex OSD schematics was reverse engineered before this project was completed, included in schematics, some technical details were investigated but discarded. https://www.immersionrc.com/fpv-products/vortex-racing-quad/
+* FrSky - An FrSky OSD schematic was reverse engineered /after/ this project was completed, included in schematics.
+* SPRacing Customers - For being awesome and supporting this work though purchases and feedback.
 
 
 ## Errors and omissions
