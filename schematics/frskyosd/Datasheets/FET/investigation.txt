@@ -1,0 +1,17 @@
+3N MARKING
+1.6x0.8mm
+SC-75/SOT416/SOT523
+
+   3
+   |
+   V
+   -
+ __|   
+|
+1--|<--2
+
+0.7v between 3(+) and 1(-)
+0.7v between 2(+) and 1(-)
+
+12MOhms between 3(+) and 2(-)
+OL in all other combinations.

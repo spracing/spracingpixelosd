@@ -1,0 +1,9 @@
+SSSMini3-F2-B
+SOT-723
+SC-105AA
+
+Pin 3 is wider than pin 1 and 2, but case is flat...
+
+See FJ3303010L
+
+Used eric1688.com for SMD mark search.
