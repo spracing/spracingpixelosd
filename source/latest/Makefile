@@ -75,8 +75,9 @@ endif
 # paths
 #######################################
 
-SRC_DIR = src
-LIB_DIR = lib
+SRC_DIR := src
+LIB_DIR := lib
+MAKE_DIR := make
 
 # Build path
 BUILD_ROOT = build
@@ -106,30 +107,34 @@ TARGET_BIN = $(TARGET_ARTIFACT_BASE).bin
 # source
 ######################################
 
-MAKE_SCRIPTS = \
+MAKE_SCRIPTS := \
 	Makefile \
-	$(shell find $(SRC_DIR) -type f -name '*.mk')
+	$(wildcard $(MAKE_DIR)/*.mk) \
+	$(shell find $(SRC_DIR)/main/target -type f -name '*.mk')
 
-LINKER_SCRIPTS = \
+LINKER_SCRIPTS := \
 	$(shell find $(SRC_DIR) -type f -name '*.ld')
 
+$(info $(MAKE_SCRIPTS))
+$(info $(LINKER_SCRIPTS))
+
 # C sources
-COMMON_SOURCES = \
+COMMON_SOURCES := \
 	$(wildcard $(SRC_DIR)/main/common/*.c) \
 
-API_SOURCES = \
+API_SOURCES := \
 	$(wildcard $(SRC_DIR)/main/api/*.c) \
 
-RUNTIME_LIBRARY_BUILD_SOURCES = \
+RUNTIME_LIBRARY_BUILD_SOURCES := \
 	$(wildcard $(SRC_DIR)/main/library/*.c) \
 
-STANDALONE_BUILD_SOURCES = \
+STANDALONE_BUILD_SOURCES := \
 	$(SRC_DIR)/main/standalone/main.c) \
 
-INTEGRATED_BUILD_SOURCES = \
+INTEGRATED_BUILD_SOURCES := \
 	$(wildcard $(SRC_DIR)/main/integrated/*.c) \
 
-TARGET_SOURCES = \
+TARGET_SOURCES := \
 	$(wildcard $(SRC_DIR)/main/target/$(TARGET)/*.c) \
 
 -include $(SRC_DIR)/main/target/$(TARGET)/$(TARGET).mk
