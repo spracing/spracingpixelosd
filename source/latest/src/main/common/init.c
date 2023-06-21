@@ -940,7 +940,17 @@ static void spracingPixelOsdPixelTimerInit(void)
   htim15.Instance = TIM15;
   htim15.Init.Prescaler = prescaler;
   htim15.Init.CounterMode = TIM_COUNTERMODE_UP;
+
+#if defined(STM32H7)
   htim15.Init.Period = lrintf((float)CLOCKS_PER_PIXEL(timerHz) * (float)RESOLUTION_SCALE);
+#elif defined(STM32L4)
+  // FUTURE verify the code below works on H7 too, the H7 code was out-by-on on the L4 due to lrintf
+  //        rounding 10.77 to 11. prototype code used a value of 10 which also works here for an 80Mhz timer clock.
+  //        if the above code works everywhere then delete H7 version above and use this everywhere.
+  htim15.Init.Period = (uint16_t)((float)CLOCKS_PER_PIXEL(timerHz) * (float)RESOLUTION_SCALE);
+#else
+#  error MCU implementation required.
+#endif
   htim15.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim15.Init.RepetitionCounter = 0;
   htim15.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
