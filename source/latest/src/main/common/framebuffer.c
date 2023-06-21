@@ -61,3 +61,44 @@ void frameBuffer_erase(uint8_t *frameBuffer)
     memset(frameBuffer, BLOCK_TRANSPARENT, FRAME_BUFFER_SIZE);
 }
 #endif
+
+#if defined(FRAMEBUFFER_EXTENDED_API)
+
+#define FRAME_PIXEL_MASK        ((1 << 1) | (1 << 0))
+#define PIXELS_PER_BYTE (8 / BITS_PER_PIXEL)
+
+void frameBuffer_setPixel(uint8_t *frameBuffer, uint16_t x, uint16_t y, uint8_t mode)
+{
+    uint8_t *lineBuffer = frameBuffer + (y * FRAME_BUFFER_LINE_SIZE);
+
+    uint8_t pixelOffsetInBlock = (PIXELS_PER_BYTE - 1) - (x % PIXELS_PER_BYTE);
+
+    uint8_t pixelBitOffset = BITS_PER_PIXEL * pixelOffsetInBlock;
+
+    uint8_t mask = ~(FRAME_PIXEL_MASK << pixelBitOffset);
+
+    uint8_t before = lineBuffer[x / PIXELS_PER_BYTE];
+    uint8_t withMaskCleared = before & mask;
+    lineBuffer[x / PIXELS_PER_BYTE] = withMaskCleared |
+            (mode << pixelBitOffset);
+}
+
+void frameBuffer_createTestPattern2(uint8_t *frameBuffer)
+{
+    for (int lineIndex = 0; lineIndex < PAL_VISIBLE_LINES; lineIndex++) {
+        int x;
+
+        x = lineIndex;
+        frameBuffer_setPixel(frameBuffer, x, lineIndex, FRAME_PIXEL_BLACK);
+        frameBuffer_setPixel(frameBuffer, x+1, lineIndex, FRAME_PIXEL_WHITE);
+        frameBuffer_setPixel(frameBuffer, x+2, lineIndex, FRAME_PIXEL_BLACK);
+
+        x = PIXEL_COUNT - 1 - lineIndex;
+        frameBuffer_setPixel(frameBuffer, x, lineIndex, FRAME_PIXEL_BLACK);
+        frameBuffer_setPixel(frameBuffer, x-1, lineIndex, FRAME_PIXEL_WHITE);
+        frameBuffer_setPixel(frameBuffer, x-2, lineIndex, FRAME_PIXEL_BLACK);
+
+    }
+}
+
+#endif // FRAMEBUFFER_EXTENDED_API
