@@ -129,7 +129,8 @@ RUNTIME_LIBRARY_BUILD_SOURCES := \
 	$(wildcard $(SRC_DIR)/main/library/*.c) \
 
 STANDALONE_BUILD_SOURCES := \
-	$(SRC_DIR)/main/standalone/main.c) \
+	$(SRC_DIR)/main/standalone/main.c \
+	$(SRC_DIR)/main/common/fonts/font_max7456_12x18.c \
 
 INTEGRATED_BUILD_SOURCES := \
 	$(wildcard $(SRC_DIR)/main/integrated/*.c) \

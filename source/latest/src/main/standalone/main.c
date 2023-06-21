@@ -80,6 +80,10 @@ int main(void) {
     {
         uint8_t *fb0 = frameBuffer_getBuffer(0);
         frameBuffer_createTestPattern2(fb0);
+
+        frameBuffer_writeString(fb0, 21, 50, (uint8_t*)"NOT A MAX7456!", 14);
+        frameBuffer_writeString(fb0, 22, 55, (uint8_t*)"NOT A MAX7456!", 14);
+        frameBuffer_writeString(fb0, 23, 60, (uint8_t*)"NOT A MAX7456!", 14);
     }
 
     bool led1State = false;
