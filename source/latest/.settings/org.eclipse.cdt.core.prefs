@@ -1,0 +1,6 @@
+eclipse.preferences.version=1
+environment/project/0.1007300241/PATH/delimiter=;
+environment/project/0.1007300241/PATH/operation=replace
+environment/project/0.1007300241/PATH/value=C\:\\cygwin64\\bin${PathDelimiter}${GNU_ARM_TOOLS_HOME}\\bin${PathDelimiter}${PATH}
+environment/project/0.1007300241/append=true
+environment/project/0.1007300241/appendContributed=true

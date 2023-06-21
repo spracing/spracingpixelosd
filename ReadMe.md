@@ -479,11 +479,20 @@ Later, the video sync and video generation code was moved into a library for a n
 4) cannot be broken by changes to the flight-controller code.
 5) allows the OSD bios code to be updated and released on a different schedule to the flight-controller code.
 
-### Library 
+Recently the code in the library can now be built in standalone mode again, like it was in the original prototype.
 
-The library is in the `library` folder of this repository.
+This is because:
+1) Betaflight maintainers were not willing to merge the SPRacingPixelOSD Pull Request into Betaflight and the amount
+   of effort required to maintain a fork of BF.
+2) Flight-One going defunct.
+3) The desire to re-use the code on a standalone L432 board, for integration with VTXs, with latest support for the
+   pre-existing CanvasAPI over UART already used by flight-control software.
 
-The library uses two frame-buffers, and this doubles the frame-buffer memory requirement.
+### Source 
+
+The main source is in the `source/latest` folder of this repository.
+
+The system uses two frame-buffers, and this doubles the frame-buffer memory requirement.
 
 Two frame-buffers are used so that the flight control software can draw into one frame-buffer, when it has time, whilst
 the video overlay is being displayed from the other frame-buffer.
@@ -492,9 +501,17 @@ If the flight control software's scheduler is good enough, you can achieve 50(PA
 looks amazingly smooth.  If the flight controller's scheduler doesn't devote much time to rendering, or the rendering
 code is slow then the video overlay can be updated slower than 50/60 FPS but results in a suboptimal user experience.
 
-The library is compiled on a per-target basis, as the pin, hardware and memory layout requirements differ per-target.
+The source is compiled on a per-target basis, as the pin, hardware and memory layout requirements differ per-target.
 
-Currently, the build system for the library is designed to generate a binary which can be flashed to a target's external
+Depending on the build mode different styles of binaries are produced.
+
+Library - For flashing onto reserved area of flash on the same MCU as the flight controller software.
+Integrated - Legacy code when the code was directly compiled into FlightOne or Betaflight.
+Standalone - For flashing to a standalone MCU, with a UART connection to the flight controller.
+
+#### Library build mode
+
+The build system for the library build mode is designed to generate a binary which can be flashed to a target's external
 flash.  The binary includes the hash for an EXST bootloader so that the bootloader can verify the binary is not
 corrupted.
 
@@ -543,14 +560,14 @@ The library can be compiled so that it can be:
 
 All the above scenarios were performed during development of the library.
 
-#### Building
+##### Building
 
 ```
-$ cd source/library
+$ cd source/latest
 $ make TARGET=SPRACINGH7RF
 ```
 
-#### Artifacts
+##### Artifacts
 
 Artifacts appear in the `build` folder.
 
@@ -561,9 +578,9 @@ The following artifacts are generated:
 3) Binary, suitable for flashing to an MCU.
 4) MAP file, useful for verification of configured memory addresses when integrating with FC build systems.
 
-#### Flashing
+##### Flashing
 
-Example script for building and flashing via DFU can be found in `library\support\scripts\build_and_flash.sh`.
+Example script for building and flashing via DFU can be found in `latest\support\scripts\build_and_flash.sh`.
 
 e.g.
 
@@ -571,7 +588,7 @@ e.g.
 $ ./supports/scripts/build_and_flash.sh SPRACINGH7RF
 ```
 
-#### Debugging
+##### Debugging
 
 The library can be compiled with debug symbols and source-level debugged using GDB, just load the symbols from the 
 `.elf` artifact.
@@ -589,17 +606,49 @@ command to load the symbols.
 add-symbol-file /library/build/<TARGET>_DEVELOPER_DEBUG.elf
 ```
 
+#### Standalone build mode
+
+The build system for the standalone build mode generates a binary for flashing to a targets internal flash.
+
+##### Building
+
+```
+$ cd source/latest
+$ make TARGET=SPRACINGEVO
+```
+
+##### Artifacts
+
+Artifacts appear in the `build` folder.
+
+The following artifacts are generated:
+
+1) ELF file.
+2) Binary, suitable for flashing to an MCU.
+3) MAP file.
+
+##### Debugging
+
+The binary can be compiled with debug symbols and source-level debugged using GDB as normal.  Load the symbols from the 
+`.elf` artifact.
+
+``` bash
+$ make DEBUG=1 TARGET=<TARGET> DEVELOPER_BUILD=YES
+```
+
+Then flash the `/library/build/<TARGET>_DEVELOPER_DEBUG.bin` to the FC via DFU. 
+
 ### Prototype
 
 The original prototype code, which was unmaintained after the initial development can be found in the `prototype` folder.
  
 WARNING!  Do NOT use the code from the `prototype` folder other than for learning/education purposes.  i.e. sure, run
-it if you like, but for anything serious, or commercial, use the code in the `library` folder.
+it if you like, but for anything serious, or commercial, use the code in the `latest` folder.
 
 Furthermore, the code in the prototype contains code from other projects, which are not licensed under the same terms as
 the library code and thus must not be used for production code as the licenses conflict with each other.
 
-The code in the `library` folder, when compared to the `prototype` code has:
+The code in the `latest` folder, when compared to the `prototype` code has:
 
 * improved video sync detection.
 * improved video sync stability in noisy environments. (e.g. when used on a quad with more electrical noise).
