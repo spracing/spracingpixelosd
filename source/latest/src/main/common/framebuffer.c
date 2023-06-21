@@ -115,6 +115,11 @@ void frameBuffer_writeCharacter(uint8_t *frameBuffer, uint16_t x, uint16_t y, ui
         uint16_t fx = x;
 
 
+        // MAX7456, pixel bits:
+        // 00 = black
+        // 10 = white
+        // X1 = transparent (external sync) or grey (internal sync).
+        // X  = Don't care
 
         for (int b = 0; b < 3; b++) {
             uint8_t c = font_max7456_12x18[fontCharacterOffset];
@@ -122,7 +127,9 @@ void frameBuffer_writeCharacter(uint8_t *frameBuffer, uint16_t x, uint16_t y, ui
 
             for (int p = 0; p <= 3; p++) {
                 uint8_t mp = (c >> (2 * (3 - p))) & ((1 << 1) | (1 << 0)); // extract max7456 pixel from character
-                uint8_t mode = FRAME_PIXEL_TRANSPARENT;
+                // FUTURE allow caller to choose rendering mode.
+                uint8_t mode = 0xFF; // don't render transparent pixels in the font.
+                // uint8_t mode = FRAME_PIXEL_TRANSPARENT; // render not-black and not-white pixels as transparent.
 
                 if (mp == ((0 << 1) | (0 << 0))) {
                     mode = FRAME_PIXEL_BLACK;
