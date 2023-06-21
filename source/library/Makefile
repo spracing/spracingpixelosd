@@ -33,7 +33,13 @@ OPTIONS   ?=
 DEVELOPER_BUILD ?= NO
 
 # Compile for EXST bootloader
-EXST ?= yes
+EXST ?= NO
+
+# Runtime library build includes library API only, no `main`.
+# Standalone build includes CPU startup code and `main`.
+# Integrated build is unmaintained and probably broken, e.g. use when compiling into FC firmware directly.
+# Valid options: RUNTIME_LIBRARY, STANDALONE, INTEGRATED
+BUILD_MODE ?=
 
 ######################################
 # building variables
@@ -96,185 +102,72 @@ TARGET_ELF = $(TARGET_ARTIFACT_BASE).elf
 TARGET_HEX = $(TARGET_ARTIFACT_BASE).hex
 TARGET_BIN = $(TARGET_ARTIFACT_BASE).bin
 
--include $(SRC_DIR)/main/target/$(TARGET)/$(TARGET).mk
-
 ######################################
 # source
 ######################################
+
+MAKE_SCRIPTS = \
+	Makefile \
+	$(shell find $(SRC_DIR) -type f -name '*.mk')
 
 LINKER_SCRIPTS = \
 	$(shell find $(SRC_DIR) -type f -name '*.ld')
 
 # C sources
-MAIN_ALL_SOURCES = \
-	$(shell find $(SRC_DIR) -type f -name '*.c')
+COMMON_SOURCES = \
+	$(wildcard $(SRC_DIR)/main/common/*.c) \
 
-MAIN_SOURCE_EXCLUDES = \
-	$(filter $(SRC_DIR)/main/target/%,$(MAIN_ALL_SOURCES))
+API_SOURCES = \
+	$(wildcard $(SRC_DIR)/main/api/*.c) \
 
-MAIN_FILTERED_SOURCES = $(filter-out $(MAIN_SOURCE_EXCLUDES),$(MAIN_ALL_SOURCES))
+RUNTIME_LIBRARY_BUILD_SOURCES = \
+	$(wildcard $(SRC_DIR)/main/library/*.c) \
 
-MAIN_SOURCES = \
-	$(MAIN_FILTERED_SOURCES) \
+STANDALONE_BUILD_SOURCES = \
+	$(SRC_DIR)/main/standalone/main.c) \
+
+INTEGRATED_BUILD_SOURCES = \
+	$(wildcard $(SRC_DIR)/main/integrated/*.c) \
+
+TARGET_SOURCES = \
 	$(wildcard $(SRC_DIR)/main/target/$(TARGET)/*.c) \
 
-MAIN_ALL_CXX_SOURCES = \
-	$(shell find $(SRC_DIR) -type f -name '*.cpp')
+-include $(SRC_DIR)/main/target/$(TARGET)/$(TARGET).mk
+include make/mcu.mk
 
-MAIN_CXX_SOURCE_EXCLUDES = \
-	$(filter $(SRC_DIR)/main/target/%,$(MAIN_ALL_CXX_SOURCES))
+C_SOURCES = \
+	$(COMMON_SOURCES) \
+	$(API_SOURCES) \
 
-MAIN_FILTERED_CXX_SOURCES = $(filter-out $(MAIN_CXX_SOURCE_EXCLUDES),$(MAIN_ALL_CXX_SOURCES))
+$(info $(BUILD_MODE))
 
-MAIN_CXX_SOURCES = \
-	$(MAIN_FILTERED_CXX_SOURCES) \
-	$(wildcard $(SRC_DIR)/main/target/$(TARGET)/*.cpp) \
+ifeq ($(BUILD_MODE),RUNTIME_LIBRARY)
+C_SOURCES := $(C_SOURCES) \
+	$(RUNTIME_LIBRARY_BUILD_SOURCES)
+BUILD_OPTIONS = RUNTIME_LIBRARY_BUILD
+endif
 
-HAL_DIR = $(LIB_DIR)/main/STM32H7xx_HAL_Driver
+ifeq ($(BUILD_MODE),STANDALONE)
+C_SOURCES := $(C_SOURCES) \
+	$(STANDALONE_BUILD_SOURCES)
+BUILD_OPTIONS = STANDALONE_BUILD FRAMEBUFFER_ERASE
+endif
 
-HAL_SOURCES = \
-	$(HAL_DIR)/Src/stm32h7xx_hal.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_adc.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_adc_ex.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_cec.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_comp.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_cordic.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_cortex.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_crc.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_crc_ex.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_cryp.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_cryp_ex.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_dac.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_dac_ex.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_dcmi.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_dfsdm.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_dfsdm_ex.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_dma.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_dma_ex.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_dma2d.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_dsi.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_dts.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_eth.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_eth_ex.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_exti.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_fdcan.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_flash.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_flash_ex.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_fmac.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_gfxmmu.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_gpio.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_hash.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_hash_ex.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_hcd.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_hrtim.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_hsem.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_i2c.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_i2c_ex.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_i2s.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_i2s_ex.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_irda.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_iwdg.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_jpeg.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_lptim.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_ltdc.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_ltdc_ex.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_mdios.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_mdma.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_mmc.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_mmc_ex.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_nand.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_nor.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_opamp.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_opamp_ex.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_ospi.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_otfdec.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_pcd.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_pcd_ex.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_pssi.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_pwr.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_pwr_ex.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_qspi.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_ramecc.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_rcc.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_rcc_ex.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_rng.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_rng_ex.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_rtc.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_rtc_ex.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_sai.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_sai_ex.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_sd.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_sd_ex.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_sdram.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_smartcard.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_smartcard_ex.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_smbus.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_spdifrx.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_spi.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_spi_ex.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_sram.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_swpmi.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_tim.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_tim_ex.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_uart.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_uart_ex.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_usart.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_usart_ex.c \
-	$(HAL_DIR)/Src/stm32h7xx_hal_wwdg.c \
-	$(HAL_DIR)/Src/stm32h7xx_ll_adc.c \
-	$(HAL_DIR)/Src/stm32h7xx_ll_bdma.c \
-	$(HAL_DIR)/Src/stm32h7xx_ll_comp.c \
-	$(HAL_DIR)/Src/stm32h7xx_ll_cordic.c \
-	$(HAL_DIR)/Src/stm32h7xx_ll_crc.c \
-	$(HAL_DIR)/Src/stm32h7xx_ll_crs.c \
-	$(HAL_DIR)/Src/stm32h7xx_ll_dac.c \
-	$(HAL_DIR)/Src/stm32h7xx_ll_delayblock.c \
-	$(HAL_DIR)/Src/stm32h7xx_ll_dma.c \
-	$(HAL_DIR)/Src/stm32h7xx_ll_dma2d.c \
-	$(HAL_DIR)/Src/stm32h7xx_ll_exti.c \
-	$(HAL_DIR)/Src/stm32h7xx_ll_fmac.c \
-	$(HAL_DIR)/Src/stm32h7xx_ll_fmc.c \
-	$(HAL_DIR)/Src/stm32h7xx_ll_gpio.c \
-	$(HAL_DIR)/Src/stm32h7xx_ll_hrtim.c \
-	$(HAL_DIR)/Src/stm32h7xx_ll_i2c.c \
-	$(HAL_DIR)/Src/stm32h7xx_ll_lptim.c \
-	$(HAL_DIR)/Src/stm32h7xx_ll_lpuart.c \
-	$(HAL_DIR)/Src/stm32h7xx_ll_mdma.c \
-	$(HAL_DIR)/Src/stm32h7xx_ll_opamp.c \
-	$(HAL_DIR)/Src/stm32h7xx_ll_pwr.c \
-	$(HAL_DIR)/Src/stm32h7xx_ll_rcc.c \
-	$(HAL_DIR)/Src/stm32h7xx_ll_rng.c \
-	$(HAL_DIR)/Src/stm32h7xx_ll_rtc.c \
-	$(HAL_DIR)/Src/stm32h7xx_ll_sdmmc.c \
-	$(HAL_DIR)/Src/stm32h7xx_ll_spi.c \
-	$(HAL_DIR)/Src/stm32h7xx_ll_swpmi.c \
-	$(HAL_DIR)/Src/stm32h7xx_ll_tim.c \
-	$(HAL_DIR)/Src/stm32h7xx_ll_usart.c \
-	$(HAL_DIR)/Src/stm32h7xx_ll_usb.c \
-	$(HAL_DIR)/Src/stm32h7xx_ll_utils.c \
+ifeq ($(BUILD_MODE),INTEGRATED)
+C_SOURCES := $(C_SOURCES) \
+	$(INTEGRATED_BUILD_SOURCES) \
+BUILD_OPTIONS = INTEGRATED_BUILD
+endif
 
-ALL_HAL_SOURCES = \
-	$(shell find $(HAL_DIR) -type f -name '*.c')
-
-HAL_EXCLUDES = \
-	$(filter %_template.c,$(ALL_HAL_SOURCES))
-
-FILTERED_HAL_SOURCES = $(filter-out $(HAL_EXCLUDES),$(ALL_HAL_SOURCES))
-
-C_SOURCES =  \
-	$(MAIN_SOURCES) \
+C_SOURCES := $(C_SOURCES) \
+	$(TARGET_SOURCES) \
+	$(MCU_SOURCES) \
 	$(HAL_SOURCES) \
-
-CXX_SOURCES = \
-	$(MAIN_CXX_SOURCES) \
-
-# ASM sources
-ASM_SOURCES =  \
 
 # Source with optimization requirements
 SPEED_OPTIMISED_SOURCES = \
-	$(SRC_DIR)/main/videoframe.c \
-	$(SRC_DIR)/main/pixelbuffer.c \
+	$(SRC_DIR)/main/common/videoframe.c \
+	$(SRC_DIR)/main/common/pixelbuffer.c \
 
 SIZE_OPTIMISED_SOURCES = \
 
@@ -297,7 +190,6 @@ XO_SOURCES = \
 PREFIX = arm-none-eabi-
 CC = $(PREFIX)gcc
 AS = $(PREFIX)gcc -x assembler-with-cpp
-CXX = $(PREFIX)g++
 CP = $(PREFIX)objcopy
 DUMP = $(PREFIX)objdump
 AR = $(PREFIX)ar
@@ -317,26 +209,6 @@ endif
 #######################################
 # CFLAGS
 #######################################
-# cpu
-CPU = -mcpu=cortex-m7
-
-# fpu
-FPU = -mfpu=fpv5-d16
-
-# float-abi
-FLOAT-ABI = -mfloat-abi=hard
-
-# mcu
-MCU = $(CPU) -mthumb $(FPU) $(FLOAT-ABI)
-
-ifeq ($(MCU_OPTIONS),)
-$(warning No MCU options specified, using H750 as defaults)
-MCU_OPTIONS = \
-	STM32H750xx \
-	STM32H7xx \
-	USE_USB_FS \
-
-endif
 
 # macros for gcc
 # AS defines
@@ -353,6 +225,7 @@ C_DEFS =  \
 	$(addprefix -D,$(MD5_OPTIONS)) \
 	$(addprefix -D,$(WOLFSSL_OPTIONS)) \
 	$(addprefix -D,$(OPTIONS)) \
+	$(addprefix -D,$(BUILD_OPTIONS)) \
 
 ifeq ($(DEVELOPER_BUILD),YES)
 	C_DEFS := $(C_DEFS) -DDEVELOPER_BUILD
@@ -367,7 +240,7 @@ C_INCLUDES =  \
 	-I$(SRC_DIR)/main/target/$(TARGET) \
 	-I$(HAL_DIR)/Inc \
 	-I$(HAL_DIR)/Inc/Legacy \
-	-I$(LIB_DIR)/main/CMSIS/Device/ST/STM32H7xx/Include \
+	-I$(LIB_DIR)/main/CMSIS/Device/ST/$(CMSIS_DEVICE)/Include \
 	-I$(LIB_DIR)/main/CMSIS/Include \
 
 CC_OPT_SPEED = $(CC_OPT_BASE) $(OPT_SPEED)
@@ -388,7 +261,7 @@ else
 	C_DEFS := $(C_DEFS) -DNDEBUG
 endif
 
-ifeq ($(EXST),yes)
+ifeq ($(EXST),YES)
 	C_DEFS := $(C_DEFS) -DUSE_EXST
 endif
 
@@ -418,19 +291,6 @@ CFLAGS = \
 	-save-temps=obj \
 	-std=gnu99 \
 
-CXXFLAGS = \
-	$(DEBUG_FLAGS) \
-	$(MCU) \
-	$(C_DEFS) \
-	$(C_INCLUDES) \
-	-Wall \
-	-fdata-sections \
-	-ffunction-sections \
-	-fno-exceptions \
-	-fsignaling-nans \
-	-fno-unsafe-math-optimizations \
-	-std=c++11 \
-	
 XO_CFLAGS = \
 	-mpure-code \
 
@@ -486,14 +346,10 @@ vpath %.s $(sort $(dir $(ASM_SOURCES)))
 OBJECTS += $(addsuffix .o, $(addprefix $(BUILD_DIR)/,$(basename $(C_SOURCES))))
 vpath %.c $(sort $(dir $(C_SOURCES)))
 
-
-# list of CPP program objects
-OBJECTS += $(addsuffix .o, $(addprefix $(BUILD_DIR)/,$(basename $(CXX_SOURCES))))
-vpath %.cpp $(sort $(dir $(CXX_SOURCES)))
+#$(info $(OBJECTS))
 
 DEPS = \
 	$(addsuffix .d, $(addprefix $(BUILD_DIR)/,$(basename $(C_SOURCES)))) \
-	$(addsuffix .d, $(addprefix $(BUILD_DIR)/,$(basename $(CXX_SOURCES)))) \
 	$(addsuffix .d, $(addprefix $(BUILD_DIR)/,$(basename $(ASM_SOURCES)))) \
 
 CLEAN_ARTIFACTS := $(TARGET_BIN)
@@ -502,7 +358,7 @@ CLEAN_ARTIFACTS += $(TARGET_ELF)
 
 
 ifeq ($(DEBUG),1)
-$(BUILD_DIR)/%.o: %.c Makefile | $(BUILD_DIR) 
+$(BUILD_DIR)/%.o: %.c $(MAKE_SCRIPTS) | $(BUILD_DIR) 
 	@mkdir -p $(dir $@)
 	$(if $(findstring $<,$(NOT_OPTIMISED_SRC)), \
 		@echo "CC (none$(if $(findstring $<,$(XO_SOURCES)),/XO,)) $<" && \
@@ -517,7 +373,7 @@ $(BUILD_DIR)/%.o: %.c Makefile | $(BUILD_DIR)
 		)\
 	)
 else
-$(BUILD_DIR)/%.o: %.c Makefile | $(BUILD_DIR)
+$(BUILD_DIR)/%.o: %.c $(MAKE_SCRIPTS) | $(BUILD_DIR)
 	@mkdir -p $(dir $@)
 	$(if $(findstring $<,$(NOT_OPTIMISED_SRC)), \
 		@echo "CC (none$(if $(findstring $<,$(XO_SOURCES)),/XO,)) $<" "$(STDOUT)" && \
@@ -538,24 +394,17 @@ $(BUILD_DIR)/%.o: %.c Makefile | $(BUILD_DIR)
 	)
 endif
 
-ifeq ($(DEBUG),1)
-$(BUILD_DIR)/%.o: %.cpp Makefile
-	@mkdir -p $(dir $@)
-	@echo "CXX (debug$(if $(findstring $<,$(XO_SOURCES)),/XO,)) $<"
-	@$(CXX) $(CC_OPT_DEBUG) -c $(CXXFLAGS) $(DEP_FLAGS) $(GENERATED_ASSEMBER_FLAGS) $< -o $@
-else
-$(BUILD_DIR)/%.o: %.cpp Makefile
-	@mkdir -p $(dir $@)
-	@echo "CXX (default$(if $(findstring $<,$(XO_SOURCES)),/XO,)) $<"
-	@$(CXX) $(CC_OPT_DEFAULT) -c $(CXXFLAGS) $(DEP_FLAGS) $(GENERATED_ASSEMBER_FLAGS) $< -o $@
-endif
-
-$(BUILD_DIR)/%.o: %.s Makefile | $(BUILD_DIR)
+$(BUILD_DIR)/%.o: %.s $(MAKE_SCRIPTS) | $(BUILD_DIR)
 	@mkdir -p $(dir $@)
 	@echo "AS (default) $<"
 	@$(AS) -c $(ASFLAGS) $(DEP_FLAGS) $< -o $@
 
-$(TARGET_ELF): $(OBJECTS) Makefile $(LINKER_SCRIPTS)
+$(BUILD_DIR)/%.o: %.s $(MAKE_SCRIPTS) | $(BUILD_DIR)
+	@mkdir -p $(dir $@)
+	@echo "AS (default) $<"
+	@$(AS) -c $(ASFLAGS) $(DEP_FLAGS) $< -o $@
+
+$(TARGET_ELF): $(OBJECTS) $(MAKE_SCRIPTS) $(LINKER_SCRIPTS)
 	@echo LD $(LD_SCRIPT) $(OBJECTS)
 	$(CC) $(OBJECTS) $(LDFLAGS) -o $@
 	@echo RE $@
@@ -563,7 +412,7 @@ $(TARGET_ELF): $(OBJECTS) Makefile $(LINKER_SCRIPTS)
 	@echo SZ $@
 	@$(SZ) $@
 
-ifeq ($(EXST),no)
+ifeq ($(EXST),NO)
 #Non-EXST goals
 $(TARGET_HEX): $(TARGET_ELF) | $(BUILD_DIR)
 	@echo HEX $<

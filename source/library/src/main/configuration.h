@@ -20,7 +20,7 @@
 
 #pragma once
 
-#include "spracingpixelosd_conf.h"
+#include "api/spracingpixelosd_conf.h"
 
 //
 // Memory
@@ -95,6 +95,8 @@
 //
 
 #if 1
+#define DEBUG_PIXEL_DMA           // debug led 1
+#define DEBUG_COMP_TRIGGER        // debug led 2
 // move debug items from below to this #if block to enable them
 #else
 #define DEBUG_PULSE_STATISTICS    // requires an additional 2.5KB ram for statistics.

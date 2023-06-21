@@ -42,6 +42,25 @@
 #define STM32H7
 #endif
 
+#define USE_VIDEO_SYNC_DMA_CACHE_MANAGEMENT
+
 #endif // STM32H743xx || defined(STM32H750xx
 
+#if defined(STM32L432xx)
+#include "stm32l4xx.h"
+#include "stm32l4xx_hal.h"
+#include "system_stm32l4xx.h"
+
+#include "stm32l4xx_ll_tim.h"
+
+#ifndef STM32L4
+#define STM32L4
+#endif
+
+#endif // STM32L432xx
+
 #include "target.h"
+
+#if !defined(STANDALONE_BUILD)
+#define USE_HAL_COMP_CALLBACK
+#endif
