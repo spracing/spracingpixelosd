@@ -111,6 +111,7 @@
 #define DEBUG_GATING              // signal on M7
 #define DEBUG_PATTERN_BARS
 #define DEBUG_PIXEL_BUFFER_FILL
+#define DEBUG_PIXEL_TIMER
 #define DEBUG_LAST_HALF_LINE
 #define DEBUG_PIXEL_BUFFER
 #define DEBUG_SYNC_PWM

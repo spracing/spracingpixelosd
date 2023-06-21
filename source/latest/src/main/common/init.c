@@ -296,6 +296,7 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef* htim)
 
   /* USER CODE END TIM15_MspPostInit 0 */
 
+#ifdef DEBUG_PIXEL_TIMER
     gpioEnable(SPRACING_PIXEL_OSD_PIXEL_DEBUG_1_GPIO_Port);
     /**TIM15 GPIO Configuration
     PE5     ------> TIM15_CH1
@@ -307,7 +308,7 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef* htim)
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
     GPIO_InitStruct.Alternate = SPRACING_PIXEL_OSD_PIXEL_DEBUG_1_GPIO_AF;
     HAL_GPIO_Init(SPRACING_PIXEL_OSD_PIXEL_DEBUG_1_GPIO_Port, &GPIO_InitStruct);
-
+#endif
   /* USER CODE BEGIN TIM15_MspPostInit 1 */
 
   /* USER CODE END TIM15_MspPostInit 1 */
@@ -991,6 +992,8 @@ static void spracingPixelOsdPixelTimerInit(void)
   {
     Error_Handler();
   }
+
+  HAL_TIM_MspPostInit(&htim15);
 }
 
 //
