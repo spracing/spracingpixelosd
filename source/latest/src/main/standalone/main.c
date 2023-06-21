@@ -5,6 +5,8 @@
 #include "api/spracingpixelosd_api.h"
 #include "standalone/system.h"
 #include "utils.h"
+#include "common/framebuffer.h"
+#include "common/glue.h"
 #include "common/io.h"
 
 void memoryInit(void)
@@ -71,7 +73,14 @@ int main(void) {
     /* Configure the system clock */
     SystemClock_Config();
 
-    init();
+    if (!init()) {
+        Error_Handler();
+    }
+
+    {
+        uint8_t *fb0 = frameBuffer_getBuffer(0);
+        frameBuffer_createTestPattern2(fb0);
+    }
 
     bool led1State = false;
     uint32_t serviceDeadlineAtUs = 0;
