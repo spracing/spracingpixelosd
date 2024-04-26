@@ -83,15 +83,16 @@ int main(void) {
         Error_Handler();
     }
 
-    uint8_t *fb0 = frameBuffer_getBuffer(0);
-    {
-        frameBuffer_writeString(fb0, 50, 8, (uint8_t*)"SPRacingEVO-ELRSOSDVTX", 22);
-#if defined(PCB_REV) && defined(PCB_PANEL_INDEX)
-        // example command line: make TARGET=SPRACINGEVO OPTIONS='PCB_REV=\"C\" PCB_PANEL_INDEX=\"1\"'
-        frameBuffer_writeString(fb0, 20, 24, (uint8_t*)("Rev " PCB_REV), 5);
-        frameBuffer_writeString(fb0, 280, 24, (uint8_t*)("No. " PCB_PANEL_INDEX), 6);
-#endif
-    }
+    // There are two frame buffers, one is used to display the video output, the other is used to draw into.
+    // using two framebuffers and switching between them when drawing is complete gives the CPU more time for drawing
+    // routines, at the expense of frame-rate.
+    // Ideally everything should be drawn in the time it takes to output/display one frame.
+    // Note that framebuffers are not cleared/erased automatically.
+
+    frameBuffer_eraseInit();
+
+    uint8_t *activefb = frameBuffer_getBuffer(0);
+    uint8_t *preparingfb = frameBuffer_getBuffer(1);
 
     bool led1State = false;
     uint32_t serviceDeadlineAtUs = 0;
@@ -108,28 +109,33 @@ int main(void) {
             spracingPixelOSDLibraryVTable->service(currentTimeUs);
         }
 
-        //
-        // If the vsyncflag was set, quickly update the framebuffer.
-        //
-        // If this code takes too long then flashing/flickering/corruption will occur.
-        // This example currently always uses framebuffer 0, it's possible to use two framebuffers and switch them
-        // when drawing is complete, which gives the CPU more time for drawing routines, at the expense of frame-rate.
-        // ideally everything should be drawn in the time it takes to output/display one frame.
-
         if (vsyncFlag) {
             vsyncFlag = false;
+
+            // erasing a framebuffer is slow, depending on the MCU there are ways to offload this to hardware.
+            frameBuffer_erase(preparingfb);
+
+            frameBuffer_writeString(preparingfb, (360 - (22 * 12))/2, 8, (uint8_t*)"SPRacingEVO-ELRSOSDVTX", 22);
+#if defined(PCB_REV) && defined(PCB_PANEL_INDEX)
+            // example command line: make TARGET=SPRACINGEVO OPTIONS='PCB_REV=\"C\" PCB_PANEL_INDEX=\"1\"'
+            frameBuffer_writeString(preparingfb, 20, 44, (uint8_t*)("Rev " PCB_REV), 5);
+            frameBuffer_writeString(preparingfb, 280, 44, (uint8_t*)("No. " PCB_PANEL_INDEX), 6);
+#endif
 
             //
             // frame counter
             //
-            static uint16_t frameCounter = 0;
+            static uint16_t frameCounter, missedFrameCounter = 0;
             frameCounter++;
 
-            static char message[11] = {0};
-            snprintf(message, 11, "%04x", frameCounter);
+            static char message[5] = {0};
+            snprintf(message, sizeof(message), "%04x", frameCounter);
 
-            uint8_t *fb0 = frameBuffer_getBuffer(0);
-            frameBuffer_writeString(fb0, 160, 24, (uint8_t*)message, strlen(message));
+            frameBuffer_writeString(preparingfb, (360/4 * 1) - (4 * 12)/2, 26, (uint8_t*)message, strlen(message));
+
+            snprintf(message, sizeof(message), "%04x", missedFrameCounter);
+
+            frameBuffer_writeString(preparingfb, (360/4 * 3) - (4 * 12)/2, 26, (uint8_t*)message, strlen(message));
 
             //
             // Chaser pixel, advanced each vsync
@@ -137,12 +143,24 @@ int main(void) {
             static uint16_t chaserPixelX[3] = {0,1,2};
             static uint8_t chaserPixelMode[3] = {FRAME_PIXEL_BLACK, FRAME_PIXEL_TRANSPARENT, FRAME_PIXEL_WHITE};
             for (uint8_t i = 0; i < 3; i++) {
-                frameBuffer_setPixel(fb0, chaserPixelX[i], 42, chaserPixelMode[i]);
+                frameBuffer_setPixel(preparingfb, chaserPixelX[i], 44, chaserPixelMode[i]);
                 chaserPixelX[i]+= 1;
                 if (chaserPixelX[i] >= PIXEL_COUNT) {
                     chaserPixelX[i] = 0;
                 }
             }
+
+            if (vsyncFlag) {
+                // if the ISR has set the vsyncFlag before we committed the frame buffer, then the drawing code took longer than one frame.
+                missedFrameCounter++;
+            }
+
+            spracingPixelOSDLibraryVTable->frameBufferCommit(preparingfb);
+
+            // swap the pointers, so we render into the other frame buffer.
+            uint8_t* swapfb = preparingfb;
+            preparingfb = activefb;
+            activefb = swapfb;
         }
 
     } while (1);
