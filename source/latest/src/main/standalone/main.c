@@ -108,9 +108,20 @@ int main(void) {
             spracingPixelOSDLibraryVTable->service(currentTimeUs);
         }
 
+        //
+        // If the vsyncflag was set, quickly update the framebuffer.
+        //
+        // If this code takes too long then flashing/flickering/corruption will occur.
+        // This example currently always uses framebuffer 0, it's possible to use two framebuffers and switch them
+        // when drawing is complete, which gives the CPU more time for drawing routines, at the expense of frame-rate.
+        // ideally everything should be drawn in the time it takes to output/display one frame.
+
         if (vsyncFlag) {
             vsyncFlag = false;
 
+            //
+            // frame counter
+            //
             static uint16_t frameCounter = 0;
             frameCounter++;
 
@@ -120,6 +131,9 @@ int main(void) {
             uint8_t *fb0 = frameBuffer_getBuffer(0);
             frameBuffer_writeString(fb0, 160, 24, (uint8_t*)message, strlen(message));
 
+            //
+            // Chaser pixel, advanced each vsync
+            //
             static uint16_t chaserPixelX[3] = {0,1,2};
             static uint8_t chaserPixelMode[3] = {FRAME_PIXEL_BLACK, FRAME_PIXEL_TRANSPARENT, FRAME_PIXEL_WHITE};
             for (uint8_t i = 0; i < 3; i++) {
