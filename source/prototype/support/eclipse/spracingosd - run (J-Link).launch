@@ -1,58 +1,59 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.eclipse.cdt.debug.gdbjtag.launchConfigurationType">
-<stringAttribute key="bad_container_name" value="\bcleanflight\support\eclipse"/>
-<intAttribute key="org.eclipse.cdt.debug.gdbjtag.core.delay" value="1"/>
-<booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.doHalt" value="false"/>
-<booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.doReset" value="false"/>
-<stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.imageFileName" value=""/>
-<stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.imageOffset" value=""/>
-<stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.initCommands" value="target remote localhost:2331&#13;&#10;monitor interface SWD&#13;&#10;monitor speed 4000&#13;&#10;monitor flash device = STM32L432KC&#13;&#10;monitor flash download = 1&#13;&#10;monitor flash breakpoints = 1&#13;&#10;monitor endian little&#13;&#10;"/>
-<stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.ipAddress" value="localhost"/>
-<stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.jtagDevice" value="Generic TCP/IP"/>
-<stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.jtagDeviceId" value="org.eclipse.cdt.debug.gdbjtag.core.jtagdevice.genericDevice"/>
-<booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.loadImage" value="true"/>
-<booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.loadSymbols" value="true"/>
-<stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.pcRegister" value=""/>
-<intAttribute key="org.eclipse.cdt.debug.gdbjtag.core.portNumber" value="10000"/>
-<stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.runCommands" value=""/>
-<booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.setPcRegister" value="false"/>
-<booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.setResume" value="false"/>
-<booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.setStopAt" value="false"/>
-<stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.stopAt" value=""/>
-<stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.symbolsFileName" value=""/>
-<stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.symbolsOffset" value=""/>
-<booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.useFileForImage" value="false"/>
-<booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.useFileForSymbols" value="false"/>
-<booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.useProjBinaryForImage" value="true"/>
-<booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.useProjBinaryForSymbols" value="true"/>
-<booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.useRemoteTarget" value="false"/>
-<stringAttribute key="org.eclipse.cdt.debug.mi.core.DEBUG_NAME" value="D:\Program Files (x86)\GNU Tools ARM Embedded\4.8 2014q3\bin\arm-none-eabi-gdb.exe"/>
-<stringAttribute key="org.eclipse.cdt.debug.mi.core.commandFactory" value="CygWin"/>
-<stringAttribute key="org.eclipse.cdt.debug.mi.core.protocol" value="mi"/>
-<booleanAttribute key="org.eclipse.cdt.debug.mi.core.verboseMode" value="false"/>
-<stringAttribute key="org.eclipse.cdt.dsf.gdb.DEBUG_NAME" value="${env_var:GNU_ARM_TOOLS_HOME}\bin\arm-none-eabi-gdb.exe"/>
-<booleanAttribute key="org.eclipse.cdt.dsf.gdb.REMOTE_TIMEOUT_ENABLED" value="false"/>
-<stringAttribute key="org.eclipse.cdt.dsf.gdb.REMOTE_TIMEOUT_VALUE" value=""/>
-<booleanAttribute key="org.eclipse.cdt.dsf.gdb.UPDATE_THREADLIST_ON_SUSPEND" value="false"/>
-<intAttribute key="org.eclipse.cdt.launch.ATTR_BUILD_BEFORE_LAUNCH_ATTR" value="0"/>
-<stringAttribute key="org.eclipse.cdt.launch.COREFILE_PATH" value=""/>
-<stringAttribute key="org.eclipse.cdt.launch.DEBUGGER_REGISTER_GROUPS" value=""/>
-<stringAttribute key="org.eclipse.cdt.launch.FORMAT" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&lt;contentList&gt;&lt;content id=&quot;sig-mpu6500SpiDetect-(format)&quot; val=&quot;1&quot;/&gt;&lt;content id=&quot;sig-detectMpu-(format)&quot; val=&quot;4&quot;/&gt;&lt;content id=&quot;tmp-mpu6500SpiDetect-(format)&quot; val=&quot;1&quot;/&gt;&lt;content id=&quot;SR-tim-timCCxHandler-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;DIER-tim-timCCxHandler-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;mask-timCCxHandler-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;null-mpu6050Detect-(format)&quot; val=&quot;4&quot;/&gt;&lt;content id=&quot;SR-null-onSerialRxPinChange-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;sr-timCCxHandler-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;in[0]-in-m25p16_readIdentification.6352-(format)&quot; val=&quot;4&quot;/&gt;&lt;content id=&quot;in[0]-in-m25p16_readIdentification.6345-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;null-SPI_I2S_GetFlagStatus-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;out[0]-out-m25p16_readIdentification.6352-(format)&quot; val=&quot;4&quot;/&gt;&lt;content id=&quot;flags-frame-null-sbusFrameComplete-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;data-PIOS_MPU9150_SetReg-(format)&quot; val=&quot;4&quot;/&gt;&lt;content id=&quot;reg-PIOS_MPU9150_SetReg-(format)&quot; val=&quot;4&quot;/&gt;&lt;content id=&quot;address-mpu6050Detect-(format)&quot; val=&quot;4&quot;/&gt;&lt;content id=&quot;null-hottV4Respond-(format)&quot; val=&quot;4&quot;/&gt;&lt;content id=&quot;txBufferHead-s-softSerialWriteByte-(format)&quot; val=&quot;1&quot;/&gt;&lt;content id=&quot;ch-softSerialWriteByte-(format)&quot; val=&quot;4&quot;/&gt;&lt;content id=&quot;rxByte-extractAndStoreRxByte-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;b-main-(format)&quot; val=&quot;4&quot;/&gt;&lt;content id=&quot;null-extractAndStoreRxByte-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;driveVoltageLow-null-hottV4Respond-(format)&quot; val=&quot;4&quot;/&gt;&lt;content id=&quot;temp1-null-hottV4Respond-(format)&quot; val=&quot;4&quot;/&gt;&lt;content id=&quot;battery1Low-null-hottV4Respond-(format)&quot; val=&quot;4&quot;/&gt;&lt;content id=&quot;null-processRxState-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;null-onSerialTimer-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;null-softSerialTimerUpdateCallback-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;null-onSerialRxPinChange-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;endByte-null-hottV4FormatAndSendEAMResponse-(format)&quot; val=&quot;4&quot;/&gt;&lt;content id=&quot;internalTxBuffer-softSerial-processTxState-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;null-processTxState-(format)&quot; val=&quot;1&quot;/&gt;&lt;content id=&quot;byteToSend-processTxState-(format)&quot; val=&quot;4&quot;/&gt;&lt;content id=&quot;null-sbusFrameComplete-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;CCR-null-ws2811LedStripInit-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;bytes[23]-bytes-null-sbusFrameComplete-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;length-showSensorsPage-(format)&quot; val=&quot;1&quot;/&gt;&lt;content id=&quot;null-digitalIn-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;tmpccer-TI1_Config-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;null-timCCxHandler-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;SR-null-openSoftSerial-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;reversedSources-null-processInCommand-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;null-rxCheckPulse-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;chipID-m25p16_readIdentification-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;sig-mpu6050Detect-(format)&quot; val=&quot;4&quot;/&gt;&lt;content id=&quot;readBuffer[0]-readBuffer-mpu6500FindRevision-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;readBuffer[1]-readBuffer-mpu6500FindRevision-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;readBuffer[2]-readBuffer-mpu6500FindRevision-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;readBuffer[3]-readBuffer-mpu6500FindRevision-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;readBuffer[4]-readBuffer-mpu6500FindRevision-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;readBuffer[5]-readBuffer-mpu6500FindRevision-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;type-null-afatfs_parseMBR-(format)&quot; val=&quot;4&quot;/&gt;&lt;content id=&quot;SR-null-timCCxHandler-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;CNT-null-timCCxHandler-(format)&quot; val=&quot;1&quot;/&gt;&lt;/contentList&gt;"/>
-<stringAttribute key="org.eclipse.cdt.launch.GLOBAL_VARIABLES" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#13;&#10;&lt;globalVariableList/&gt;&#13;&#10;"/>
-<stringAttribute key="org.eclipse.cdt.launch.MEMORY_BLOCKS" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#13;&#10;&lt;memoryBlockExpressionList/&gt;&#13;&#10;"/>
-<stringAttribute key="org.eclipse.cdt.launch.PROGRAM_NAME" value="build/SPRacingGraphicOSD.elf"/>
-<stringAttribute key="org.eclipse.cdt.launch.PROJECT_ATTR" value="spracingosd"/>
-<booleanAttribute key="org.eclipse.cdt.launch.PROJECT_BUILD_CONFIG_AUTO_ATTR" value="false"/>
-<stringAttribute key="org.eclipse.cdt.launch.PROJECT_BUILD_CONFIG_ID_ATTR" value=""/>
-<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
-<listEntry value="/spracingosd"/>
-</listAttribute>
-<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
-<listEntry value="4"/>
-</listAttribute>
-<mapAttribute key="org.eclipse.debug.core.preferred_launchers">
-<mapEntry key="[debug]" value="org.eclipse.cdt.debug.gdbjtag.core.cdiLaunchDelegate"/>
-</mapAttribute>
-<stringAttribute key="org.eclipse.dsf.launch.MEMORY_BLOCKS" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#13;&#10;&lt;memoryBlockExpressionList context=&quot;reserved-for-future-use&quot;/&gt;&#13;&#10;"/>
-<stringAttribute key="process_factory_id" value="org.eclipse.cdt.dsf.gdb.GdbProcessFactory"/>
+    <stringAttribute key="bad_container_name" value="\bcleanflight\support\eclipse"/>
+    <stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.connection" value="gdb:localhost:10000#"/>
+    <intAttribute key="org.eclipse.cdt.debug.gdbjtag.core.delay" value="1"/>
+    <booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.doHalt" value="false"/>
+    <booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.doReset" value="false"/>
+    <stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.imageFileName" value=""/>
+    <stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.imageOffset" value=""/>
+    <stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.initCommands" value="target remote localhost:2331&#13;&#10;monitor interface SWD&#13;&#10;monitor speed 4000&#13;&#10;monitor flash device = STM32L432KC&#13;&#10;monitor flash download = 1&#13;&#10;monitor flash breakpoints = 1&#13;&#10;monitor endian little&#13;&#10;"/>
+    <stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.jtagDevice" value="Generic TCP/IP"/>
+    <stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.jtagDeviceId" value="org.eclipse.cdt.debug.gdbjtag.core.jtagdevice.genericDevice"/>
+    <booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.loadImage" value="true"/>
+    <booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.loadSymbols" value="true"/>
+    <stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.pcRegister" value=""/>
+    <stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.protocol" value="remote"/>
+    <stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.runCommands" value=""/>
+    <booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.setPcRegister" value="false"/>
+    <booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.setResume" value="false"/>
+    <booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.setStopAt" value="false"/>
+    <stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.stopAt" value=""/>
+    <stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.symbolsFileName" value=""/>
+    <stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.symbolsOffset" value=""/>
+    <booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.useFileForImage" value="false"/>
+    <booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.useFileForSymbols" value="false"/>
+    <booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.useProjBinaryForImage" value="true"/>
+    <booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.useProjBinaryForSymbols" value="true"/>
+    <booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.useRemoteTarget" value="false"/>
+    <stringAttribute key="org.eclipse.cdt.debug.mi.core.DEBUG_NAME" value="D:\Program Files (x86)\GNU Tools ARM Embedded\4.8 2014q3\bin\arm-none-eabi-gdb.exe"/>
+    <stringAttribute key="org.eclipse.cdt.debug.mi.core.commandFactory" value="CygWin"/>
+    <stringAttribute key="org.eclipse.cdt.debug.mi.core.protocol" value="mi"/>
+    <booleanAttribute key="org.eclipse.cdt.debug.mi.core.verboseMode" value="false"/>
+    <stringAttribute key="org.eclipse.cdt.dsf.gdb.DEBUG_NAME" value="${env_var:GNU_ARM_TOOLS_HOME}\bin\arm-none-eabi-gdb.exe"/>
+    <booleanAttribute key="org.eclipse.cdt.dsf.gdb.REMOTE_TIMEOUT_ENABLED" value="false"/>
+    <stringAttribute key="org.eclipse.cdt.dsf.gdb.REMOTE_TIMEOUT_VALUE" value=""/>
+    <booleanAttribute key="org.eclipse.cdt.dsf.gdb.UPDATE_THREADLIST_ON_SUSPEND" value="false"/>
+    <intAttribute key="org.eclipse.cdt.launch.ATTR_BUILD_BEFORE_LAUNCH_ATTR" value="0"/>
+    <stringAttribute key="org.eclipse.cdt.launch.COREFILE_PATH" value=""/>
+    <stringAttribute key="org.eclipse.cdt.launch.DEBUGGER_REGISTER_GROUPS" value=""/>
+    <stringAttribute key="org.eclipse.cdt.launch.FORMAT" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&lt;contentList&gt;&lt;content id=&quot;sig-mpu6500SpiDetect-(format)&quot; val=&quot;1&quot;/&gt;&lt;content id=&quot;sig-detectMpu-(format)&quot; val=&quot;4&quot;/&gt;&lt;content id=&quot;tmp-mpu6500SpiDetect-(format)&quot; val=&quot;1&quot;/&gt;&lt;content id=&quot;SR-tim-timCCxHandler-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;DIER-tim-timCCxHandler-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;mask-timCCxHandler-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;null-mpu6050Detect-(format)&quot; val=&quot;4&quot;/&gt;&lt;content id=&quot;SR-null-onSerialRxPinChange-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;sr-timCCxHandler-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;in[0]-in-m25p16_readIdentification.6352-(format)&quot; val=&quot;4&quot;/&gt;&lt;content id=&quot;in[0]-in-m25p16_readIdentification.6345-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;null-SPI_I2S_GetFlagStatus-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;out[0]-out-m25p16_readIdentification.6352-(format)&quot; val=&quot;4&quot;/&gt;&lt;content id=&quot;flags-frame-null-sbusFrameComplete-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;data-PIOS_MPU9150_SetReg-(format)&quot; val=&quot;4&quot;/&gt;&lt;content id=&quot;reg-PIOS_MPU9150_SetReg-(format)&quot; val=&quot;4&quot;/&gt;&lt;content id=&quot;address-mpu6050Detect-(format)&quot; val=&quot;4&quot;/&gt;&lt;content id=&quot;null-hottV4Respond-(format)&quot; val=&quot;4&quot;/&gt;&lt;content id=&quot;txBufferHead-s-softSerialWriteByte-(format)&quot; val=&quot;1&quot;/&gt;&lt;content id=&quot;ch-softSerialWriteByte-(format)&quot; val=&quot;4&quot;/&gt;&lt;content id=&quot;rxByte-extractAndStoreRxByte-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;b-main-(format)&quot; val=&quot;4&quot;/&gt;&lt;content id=&quot;null-extractAndStoreRxByte-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;driveVoltageLow-null-hottV4Respond-(format)&quot; val=&quot;4&quot;/&gt;&lt;content id=&quot;temp1-null-hottV4Respond-(format)&quot; val=&quot;4&quot;/&gt;&lt;content id=&quot;battery1Low-null-hottV4Respond-(format)&quot; val=&quot;4&quot;/&gt;&lt;content id=&quot;null-processRxState-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;null-onSerialTimer-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;null-softSerialTimerUpdateCallback-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;null-onSerialRxPinChange-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;endByte-null-hottV4FormatAndSendEAMResponse-(format)&quot; val=&quot;4&quot;/&gt;&lt;content id=&quot;internalTxBuffer-softSerial-processTxState-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;null-processTxState-(format)&quot; val=&quot;1&quot;/&gt;&lt;content id=&quot;byteToSend-processTxState-(format)&quot; val=&quot;4&quot;/&gt;&lt;content id=&quot;null-sbusFrameComplete-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;CCR-null-ws2811LedStripInit-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;bytes[23]-bytes-null-sbusFrameComplete-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;length-showSensorsPage-(format)&quot; val=&quot;1&quot;/&gt;&lt;content id=&quot;null-digitalIn-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;tmpccer-TI1_Config-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;null-timCCxHandler-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;SR-null-openSoftSerial-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;reversedSources-null-processInCommand-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;null-rxCheckPulse-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;chipID-m25p16_readIdentification-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;sig-mpu6050Detect-(format)&quot; val=&quot;4&quot;/&gt;&lt;content id=&quot;readBuffer[0]-readBuffer-mpu6500FindRevision-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;readBuffer[1]-readBuffer-mpu6500FindRevision-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;readBuffer[2]-readBuffer-mpu6500FindRevision-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;readBuffer[3]-readBuffer-mpu6500FindRevision-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;readBuffer[4]-readBuffer-mpu6500FindRevision-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;readBuffer[5]-readBuffer-mpu6500FindRevision-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;type-null-afatfs_parseMBR-(format)&quot; val=&quot;4&quot;/&gt;&lt;content id=&quot;SR-null-timCCxHandler-(format)&quot; val=&quot;2&quot;/&gt;&lt;content id=&quot;CNT-null-timCCxHandler-(format)&quot; val=&quot;1&quot;/&gt;&lt;/contentList&gt;"/>
+    <stringAttribute key="org.eclipse.cdt.launch.GLOBAL_VARIABLES" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#13;&#10;&lt;globalVariableList/&gt;&#13;&#10;"/>
+    <stringAttribute key="org.eclipse.cdt.launch.MEMORY_BLOCKS" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#13;&#10;&lt;memoryBlockExpressionList/&gt;&#13;&#10;"/>
+    <stringAttribute key="org.eclipse.cdt.launch.PROGRAM_NAME" value="build/SPRacingGraphicOSD.elf"/>
+    <stringAttribute key="org.eclipse.cdt.launch.PROJECT_ATTR" value="spracingosd"/>
+    <booleanAttribute key="org.eclipse.cdt.launch.PROJECT_BUILD_CONFIG_AUTO_ATTR" value="false"/>
+    <stringAttribute key="org.eclipse.cdt.launch.PROJECT_BUILD_CONFIG_ID_ATTR" value=""/>
+    <booleanAttribute key="org.eclipse.debug.core.ATTR_FORCE_SYSTEM_CONSOLE_ENCODING" value="false"/>
+    <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+        <listEntry value="/spracingosd"/>
+    </listAttribute>
+    <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+        <listEntry value="4"/>
+    </listAttribute>
+    <mapAttribute key="org.eclipse.debug.core.preferred_launchers">
+        <mapEntry key="[debug]" value="org.eclipse.cdt.debug.gdbjtag.core.cdiLaunchDelegate"/>
+    </mapAttribute>
+    <stringAttribute key="org.eclipse.dsf.launch.MEMORY_BLOCKS" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#13;&#10;&lt;memoryBlockExpressionList context=&quot;reserved-for-future-use&quot;/&gt;&#13;&#10;"/>
+    <stringAttribute key="process_factory_id" value="org.eclipse.cdt.dsf.gdb.GdbProcessFactory"/>
 </launchConfiguration>
