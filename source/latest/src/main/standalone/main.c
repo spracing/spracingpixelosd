@@ -86,13 +86,16 @@ int main(void) {
     uint8_t *fb0 = frameBuffer_getBuffer(0);
     {
         frameBuffer_writeString(fb0, 50, 8, (uint8_t*)"SPRacingEVO-ELRSOSDVTX", 22);
-        frameBuffer_writeString(fb0, 20, 24, (uint8_t*)"Rev B", 5);
-        frameBuffer_writeString(fb0, 280, 24, (uint8_t*)"No. 12", 6);
+#if defined(PCB_REV) && defined(PCB_PANEL_INDEX)
+        // example command line: make TARGET=SPRACINGEVO OPTIONS='PCB_REV=\"C\" PCB_PANEL_INDEX=\"1\"'
+        frameBuffer_writeString(fb0, 20, 24, (uint8_t*)("Rev " PCB_REV), 5);
+        frameBuffer_writeString(fb0, 280, 24, (uint8_t*)("No. " PCB_PANEL_INDEX), 6);
+#endif
     }
 
     bool led1State = false;
     uint32_t serviceDeadlineAtUs = 0;
-    // TODO
+
     do {
         uint32_t currentTimeUs = micros();
 

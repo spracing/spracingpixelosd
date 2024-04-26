@@ -227,9 +227,6 @@ C_DEFS =  \
 	-D"HSE_VALUE=8000000" \
 	-D"HSE_STARTUP_TIMEOUT=250" \
 	-DTARGET_$(TARGET) \
-	$(addprefix -D,$(PRINTF_OPTIONS)) \
-	$(addprefix -D,$(MD5_OPTIONS)) \
-	$(addprefix -D,$(WOLFSSL_OPTIONS)) \
 	$(addprefix -D,$(OPTIONS)) \
 	$(addprefix -D,$(BUILD_OPTIONS)) \
 
