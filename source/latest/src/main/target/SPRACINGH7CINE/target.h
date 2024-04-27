@@ -1,0 +1,147 @@
+/*
+ * Copyright 2019-2023 Dominic Clifton
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/*
+ * SP Racing Pixel OSD by Dominic Clifton
+ *
+ * Author: Dominic Clifton - Sync generation, Sync Detection, Video Overlay and first-cut of working OSD system.
+ */
+#pragma once
+
+#define SPRACINGH7CINE_REV 3 // REV C
+//#define SPRACINGH7CINE_REV 2 // REV B
+//#define SPRACINGH7CINE_REV 1 // REV A - No longer supported, prototype PCB's 100% destroyed.
+#ifndef SPRACINGH7CINE_REV
+#define SPRACINGH7CINE_REV 3 // REV C
+#endif
+
+#if (SPRACINGH7CINE_REV == 1)
+// Rev A
+#error PCB REVISION NOT SUPPORTED
+#elif (SPRACINGH7CINE_REV == 2)
+// Rev B
+#define SPRACING_PIXEL_OSD_WHITE_SOURCE_SELECT_PIN      PE12
+#define SPRACING_PIXEL_OSD_BLACK_PIN                    PE13
+#define SPRACING_PIXEL_OSD_MASK_ENABLE_PIN              PE14
+#define SPRACING_PIXEL_OSD_WHITE_PIN                    PE15
+
+#define SPRACING_PIXEL_OSD_SYNC_IN_PIN                  PE11 // COMP2_INP
+#define SPRACING_PIXEL_OSD_SYNC_OUT_PIN                 PA8  // TIM1_CH1
+#define SPRACING_PIXEL_OSD_SYNC_OUT_Pin                 GPIO_PIN_8
+#define SPRACING_PIXEL_OSD_SYNC_OUT_GPIO_Port           GPIOA
+#define USE_TIM1_CH1_FOR_SYNC
+#define SYNC_TIMER_CHANNEL TIM_CHANNEL_1
+
+#define SPRACING_PIXEL_OSD_WHITE_SOURCE_PIN             PA4  // DAC1_OUT1
+#define SPRACING_PIXEL_OSD_VIDEO_THRESHOLD_DEBUG_PIN    PA5  // DAC1_OUT2
+#define SPRACING_PIXEL_OSD_PIXEL_DEBUG_1_PIN            PE5  // TIM15_CH1 - For DMA updates
+#define SPRACING_PIXEL_OSD_PIXEL_DEBUG_2_PIN            PE6  // TIM15_CH2 - Spare
+#define SPRACING_PIXEL_OSD_PIXEL_GATING_DEBUG_PIN       PB0 // TIM1_CH2N // actual gating is on CH4
+#define SPRACING_PIXEL_OSD_PIXEL_BLANKING_DEBUG_PIN     PB1 // TIM1_CH3N // actual blanking is on CH5
+#elif (SPRACINGH7CINE_REV == 3)
+// Rev C
+#define SPRACING_PIXEL_OSD_BLACK_SINK_PIN               PE12
+#define SPRACING_PIXEL_OSD_BLACK_SINK_Pin               GPIO_PIN_12
+#define SPRACING_PIXEL_OSD_BLACK_SINK_GPIO_Port         GPIOE
+
+#define SPRACING_PIXEL_OSD_WHITE_SOURCE_FIXED_PIN       PE13
+#define SPRACING_PIXEL_OSD_WHITE_SOURCE_FIXED_Pin       GPIO_PIN_13
+#define SPRACING_PIXEL_OSD_WHITE_SOURCE_FIXED_GPIO_Port GPIOE
+
+#define SPRACING_PIXEL_OSD_WHITE_SOURCE_SELECT_PIN      PE14
+#define SPRACING_PIXEL_OSD_WHITE_SOURCE_SELECT_Pin          GPIO_PIN_14
+#define SPRACING_PIXEL_OSD_WHITE_SOURCE_SELECT_GPIO_Port    GPIOE
+
+#define SPRACING_PIXEL_OSD_MASK_ENABLE_PIN              PE15
+#define SPRACING_PIXEL_OSD_MASK_ENABLE_Pin              GPIO_PIN_15
+#define SPRACING_PIXEL_OSD_MASK_ENABLE_GPIO_Port        GPIOE
+
+#define SPRACING_PIXEL_OSD_SYNC_IN_PIN                  PE11 // COMP2_INP
+#define SPRACING_PIXEL_OSD_SYNC_IN_Pin                  GPIO_PIN_11
+#define SPRACING_PIXEL_OSD_SYNC_IN_GPIO_Port            GPIOE
+#define SPRACING_PIXEL_OSD_SYNC_IN_COMP                 COMP2
+#define SPRACING_PIXEL_OSD_SYNC_TIM1_ETR_REMAP          TIM_TIM1_ETR_COMP2_OUT
+#define SPRACING_PIXEL_OSD_SYNC_IN_COMP_INPUT           COMP_INPUT_PLUS_IO2
+
+#define SPRACING_PIXEL_OSD_SYNC_OUT_PIN                 PA8  // TIM1_CH1
+#define SPRACING_PIXEL_OSD_SYNC_OUT_Pin                 GPIO_PIN_8
+#define SPRACING_PIXEL_OSD_SYNC_OUT_GPIO_Port           GPIOA
+#define USE_TIM1_CH1_FOR_SYNC
+#define SYNC_TIMER_CHANNEL TIM_CHANNEL_1
+
+#define SPRACING_PIXEL_OSD_WHITE_SOURCE_DAC_PIN         PA4  // DAC1_OUT1
+#define SPRACING_PIXEL_OSD_VIDEO_THRESHOLD_DEBUG_PIN    PA5  // DAC1_OUT2
+#define SPRACING_PIXEL_OSD_PIXEL_DEBUG_1_PIN            PE5  // TIM15_CH1 - For DMA updates
+#define SPRACING_PIXEL_OSD_PIXEL_DEBUG_2_PIN            PE6  // TIM15_CH2 - Spare
+#define SPRACING_PIXEL_OSD_PIXEL_GATING_DEBUG_PIN       PB0 // TIM1_CH2N // actual gating is on CH4
+#define SPRACING_PIXEL_OSD_PIXEL_BLANKING_DEBUG_PIN     PB1 // TIM1_CH3N // actual blanking is on CH5
+#endif
+
+
+#define SPRACING_PIXEL_OSD_PIXEL_DEBUG_1_Pin            GPIO_PIN_5
+#define SPRACING_PIXEL_OSD_PIXEL_DEBUG_1_GPIO_Port      GPIOE
+#define SPRACING_PIXEL_OSD_PIXEL_DEBUG_2_Pin            GPIO_PIN_6
+#define SPRACING_PIXEL_OSD_PIXEL_DEBUG_2_GPIO_Port      GPIOE
+
+#define SPRACING_PIXEL_OSD_GATING_DEBUG_Pin             GPIO_PIN_0
+#define SPRACING_PIXEL_OSD_GATING_DEBUG_GPIO_Port       GPIOB
+
+#define SPRACING_PIXEL_OSD_BLANKING_DEBUG_Pin           GPIO_PIN_1
+#define SPRACING_PIXEL_OSD_BLANKING_DEBUG_GPIO_Port     GPIOB
+
+#define SPRACING_PIXEL_OSD_PIXEL_DEBUG_1_GPIO_AF        GPIO_AF4_TIM15
+#define SPRACING_PIXEL_OSD_PIXEL_DEBUG_2_GPIO_AF        GPIO_AF4_TIM15
+#define SPRACING_PIXEL_OSD_GATING_DEBUG_GPIO_AF         GPIO_AF1_TIM1
+#define SPRACING_PIXEL_OSD_BLANKING_DEBUG_GPIO_AF       GPIO_AF1_TIM1
+
+#define USE_PIXEL_OUT_GPIOE
+#ifdef USE_PIXEL_OUT_GPIOE
+#if (SPRACINGH7CINE_REV == 1)
+#error PCB REVISION NOT SUPPORTED
+#elif (SPRACINGH7CINE_REV == 2)
+#define PIXEL_WHITE_SOURCE_SELECT_BIT   4 // PE12
+#define PIXEL_BLACK_BIT                 5 // PE13
+#define PIXEL_MASK_ENABLE_BIT           6 // PE14
+#define PIXEL_WHITE_BIT                 7 // PE15
+#define PIXEL_CONTROL_FIRST_BIT PIXEL_WHITE_SOURCE_SELECT_BIT
+#elif (SPRACINGH7CINE_REV == 3)
+#define PIXEL_BLACK_BIT                 4 // PE12
+#define PIXEL_WHITE_BIT                 5 // PE13
+#define PIXEL_WHITE_SOURCE_SELECT_BIT   6 // PE14
+#define PIXEL_MASK_ENABLE_BIT           7 // PE15
+#define PIXEL_CONTROL_FIRST_BIT PIXEL_BLACK_BIT
+#endif
+#define PIXEL_ODR_OFFSET 8 // 0 = PE0-PE7, 8 = PE8-PE15
+#endif
+
+#ifdef USE_PIXEL_OUT_GPIOC
+#define PIXEL_BLACK_BIT 6 // PC14
+#define PIXEL_WHITE_BIT 7 // PC15
+#define PIXEL_ODR_OFFSET 8
+#endif
+
+#ifdef USE_PIXEL_OUT_GPIOB
+//#define PIXEL_BLACK_BIT 6 // PB6
+//#define PIXEL_WHITE_BIT 7 // PB7
+#define PIXEL_BLACK_BIT 0 // PB0
+#define PIXEL_WHITE_BIT 1 // PB1
+#define PIXEL_ODR_OFFSET 0
+#endif
+
+#define SPRACING_PIXEL_OSD_VIDEO_IN_ADC_PIN             PC5
+#define SPRACING_PIXEL_OSD_VIDEO_IN_ADC_Pin             GPIO_PIN_5
+#define SPRACING_PIXEL_OSD_VIDEO_IN_GPIO_Port           GPIOC
+
