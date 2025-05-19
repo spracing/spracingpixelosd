@@ -18,7 +18,7 @@
 
 ifneq ($(EXST),)
 EXST = YES
-EXST_ADJUST_VMA = 0x97CA0000
+EXST_ADJUST_VMA = 0x900DE000
 LIBRARY_SIZE   := 32
 LD_SCRIPT       = $(SRC_DIR)/main/target/$(TARGET)/$(TARGET)_EXST.ld
 endif
